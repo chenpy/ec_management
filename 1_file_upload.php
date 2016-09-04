@@ -13,7 +13,7 @@ function delete_old_data($tableName,$conn){
 function delete_summary_old_data($mall,$conn){
   $delete_old_sql="DELETE FROM summary WHERE `出荷日` = CURDATE() AND `モール`='$mall';";
   if ($conn->query($delete_old_sql) === TRUE) {
-      echo "Delete old data of $tableName successfully<br>";
+      echo "Delete old data of summary successfully<br>";
   } else {
       echo "Error delete old data: " . $conn->error."<br>";
   }
@@ -64,7 +64,7 @@ if(isset($_POST["yahooUpload"]) && $_FILES["yahoo_items_info"]["error"] == UPLOA
     $sql = "Insert into summary (SELECT
   '',
   'Yahoo',
-  yahoo_order_info.orderId,
+  yahoo_order_info.OrderID,
 REPLACE
   (
     SUBSTR(

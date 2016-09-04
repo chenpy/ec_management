@@ -14,7 +14,6 @@ FROM
 INTO OUTFILE
   '/Library/WebServer/Documents/uploads/uploadTest.csv' FIELDS ENCLOSED BY '\"' TERMINATED BY ',' ESCAPED BY '\"' LINES TERMINATED BY '\r\n' ";
 
-    echo "<br>".$sql."<br>";
     if ($conn->query($sql) === TRUE) {
         echo "Generate csv successfully";
         echo "<br>The csv file is store in  /Library/WebServer/Documents/uploads/uploadTest.csv";

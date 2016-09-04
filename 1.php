@@ -5,7 +5,12 @@
    .upload {
       float:left;
       width:100%;
-      height:15%;
+      height:10%;
+    }
+    .upload_large {
+      float:left;
+      width:100%;
+      height:20%;
     }
   </style>
 </head>
@@ -19,7 +24,7 @@
    	 	<input type="submit" value="Upload" name="rakutenUpload">
 		</form>
   	</div>
-  	<div class="upload">
+  	<div class="upload_large">
   		<form action="1_file_upload.php" method="post" enctype="multipart/form-data">
     		ヤフーcsvファイル<br>
     	yahoo_items_info<input type="file" name="yahoo_items_info">
@@ -27,12 +32,12 @@
    	 	<input type="submit" value="Upload" name="yahooUpload">
 		</form>
   	</div>
-  	<div class="upload">
+  	<div class="upload_large">
   		<form action="1_file_upload.php" method="post" enctype="multipart/form-data">
-    		アマゾン未出荷注文レポート
+    		アマゾン<br>未出荷注文レポート
     	<input type="file" name="amazon_to_ship"><br>
     	注文レポート
-    	<input type="file" name="amazon_order"><br>
+    	<input type="file" name="amazon_order">
    	 	<input type="submit" value="Upload" name="amazonUpload">
 		</form>
   	</div>
@@ -52,7 +57,7 @@
   	</div>
   	<div class="upload">
   		<form action="1_generate_csv.php" method="post" enctype="multipart/form-data">
-    		本日出荷資料まとめ(Download excel file)
+    		本日出荷資料まとめ(Download csv file)
         <input type="submit" value="Generate" name="generateCsv">
 		</form>
   	</div>
