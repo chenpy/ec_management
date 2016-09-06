@@ -76,13 +76,13 @@ REPLACE
     '/'
   ),
   SUBSTR(yahoo_order_info.OrderDate, 11),
-  CURDATE(), yahoo_order_info.BillName, yahoo_order_info.BillNameKana, yahoo_order_info.BillZip, CONCAT(
+  CURDATE(), yahoo_order_info.BillName, yahoo_order_info.BillNameKana, INSERT(yahoo_order_info.BillZip,4,0,'-'), CONCAT(
     yahoo_order_info.BillState,
     yahoo_order_info.BillCity,
     yahoo_order_info.BillAddress1,
     yahoo_order_info.BillAddress2
   ),
-  yahoo_order_info.BillPhone,
+  INSERT(yahoo_order_info.BillPhone,4,0,'-'),
   yahoo_items_info.Description,
   items_info.name,items_info.id,
   yahoo_items_info.Quantity,
@@ -90,14 +90,14 @@ REPLACE
   yahoo_items_info.UnitPrice,
   yahoo_order_info.ShipName,
   yahoo_order_info.ShipNameKana,
-  yahoo_order_info.ShipZip,
+  INSERT(yahoo_order_info.ShipZip,4,0,'-'),
   CONCAT(
     yahoo_order_info.ShipState,
     yahoo_order_info.ShipCity,
     yahoo_order_info.ShipAddress1,
     yahoo_order_info.ShipAddress2
   ),
-  yahoo_order_info.ShipPhone,
+  INSERT(yahoo_order_info.ShipPhone,4,0,'-'),
   yahoo_order_info.ShippingReqDateConv,
     CASE SUBSTR(ShippingReqTime,1,2) WHEN '08' THEN '01'
     ELSE SUBSTR(ShippingReqTime,1,2) END,
@@ -143,8 +143,8 @@ if(isset($_POST["rakutenUpload"]) && $_FILES["rakuten"]["error"] == UPLOAD_ERR_O
     // Insert into summary table
     delete_summary_old_data("Rakuten",$conn);
     //SQL BEGIN
-        $sql = "insert into summary (SELECT '','Rakuten',`受注番号`,`注文日`,`注文時間`,CURDATE(),CONCAT(`注文者名字`,`注文者名前`) ,CONCAT(`注文者名字フリガナ`,`注文者名前フリガナ`) ,CONCAT(`注文者郵便番号１`,`注文者郵便番号２`), CONCAT(`注文者住所：都道府県`,`注文者住所：都市区`,`注文者住所：町以降`),CONCAT(`注文者電話番号１`,`注文者電話番号２`,`注文者電話番号３`),`商品名` ,items_info.name ,items_info.id,rakuten_original.`個数`,rakuten_original.`個数`*items_info.unit,rakuten_original.単価,CONCAT(`送付先名字`,`送付先名前`) ,CONCAT(`送付先名字フリガナ`,`送付先名前フリガナ`),CONCAT(`送付先郵便番号１`,`送付先郵便番号２`),CONCAT(`送付先住所：都道府県`,`送付先住所：都市区`,`送付先住所：町以降`),CONCAT(`送付先電話番号１`,`送付先電話番号２`,`送付先電話番号３`),`お届け日指定`, IF( LOCATE('〜', `コメント`) != 0, CASE SUBSTR(`コメント`, LOCATE('〜', `コメント`) -3, 2) WHEN '08' THEN '01' ELSE SUBSTR(`コメント`, LOCATE('〜', `コメント`) -3, 2) END, '' ) ,TRIM(IF(STRCMP(CONCAT(`注文者名字`,`注文者名前`),CONCAT(`送付先名字`,`送付先名前`)),CONCAT('注文者:',CONCAT(`注文者名字`,`注文者名前`)),'')),REPLACE(REPLACE(`コメント`,'\n',''),'　',''),'','','' FROM `rakuten_original`,`items_info` WHERE
-  items_info.id = rakuten_original.`商品ID`)";
+        $sql = "insert into summary (SELECT '','Rakuten',`受注番号`,`注文日`,`注文時間`,CURDATE(),CONCAT(`注文者名字`,`注文者名前`) ,CONCAT(`注文者名字フリガナ`,`注文者名前フリガナ`) ,CONCAT(`注文者郵便番号１`,'-',`注文者郵便番号２`), CONCAT(`注文者住所：都道府県`,`注文者住所：都市区`,`注文者住所：町以降`),CONCAT(`注文者電話番号１`,'-',`注文者電話番号２`,`注文者電話番号３`),`商品名` ,items_info.name ,items_info.id,rakuten_original.`個数`,rakuten_original.`個数`*items_info.unit,rakuten_original.単価,CONCAT(`送付先名字`,`送付先名前`) ,CONCAT(`送付先名字フリガナ`,`送付先名前フリガナ`),CONCAT(`送付先郵便番号１`,'-',`送付先郵便番号２`),CONCAT(`送付先住所：都道府県`,`送付先住所：都市区`,`送付先住所：町以降`),CONCAT(`送付先電話番号１`,'-',`送付先電話番号２`,`送付先電話番号３`),`お届け日指定`, IF( LOCATE('〜', `コメント`) != 0, CASE SUBSTR(`コメント`, LOCATE('〜', `コメント`) -3, 2) WHEN '08' THEN '01' ELSE SUBSTR(`コメント`, LOCATE('〜', `コメント`) -3, 2) END, '' ) ,TRIM(IF(STRCMP(CONCAT(`注文者名字`,`注文者名前`),CONCAT(`送付先名字`,`送付先名前`)),CONCAT('注文者:',CONCAT(`注文者名字`,`注文者名前`)),'')),REPLACE(REPLACE(`コメント`,'\n',''),'　',''),'','','' FROM `rakuten_original`,`items_info` WHERE
+        items_info.id = rakuten_original.`商品ID`)";
 //SQL END
     if ($conn->query($sql) === TRUE) {
         echo "Insert rakuten data successfully";
@@ -181,7 +181,7 @@ if(isset($_POST["ponpareUpload"]) && $_FILES["ponpare"]["error"] == UPLOAD_ERR_O
     // Insert into summary table
     //SQL BEGIN
     delete_summary_old_data("ポンパレモール",$conn);
-    $sql = "INSERT INTO summary SELECT '','ポンパレモール' ,`注文番号`,REPLACE ( SUBSTR( `注文日時`, 1, 10 ), '-', '/' ), SUBSTR(`注文日時`, 11),CURDATE(),CONCAT(`注文者名字`,`注文者名前`) ,CONCAT(`注文者名字フリガナ`,`注文者名前フリガナ`) ,CONCAT(`注文者郵便番号1`,`注文者郵便番号2`), CONCAT(`注文者住所：都道府県`,`注文者住所：市区町村以降`),CONCAT(`注文者電話番号`),`商品名` ,name ,id,`個数`,unit * `個数`,単価, CONCAT(`送付先名字`,`送付先名前`) ,CONCAT(`送付先名字フリガナ`,`送付先名前フリガナ`),CONCAT(`送付先郵便番号1`,`送付先郵便番号2`),CONCAT(`送付先住所：都道府県`,`送付先住所：市区町村以降`),`送付先電話番号`,IF( `コメント` REGEXP '^.*-.*-.*\(.*).*$', SUBSTR(`コメント`, 11, 10), '' ) , IF( LOCATE('〜', `コメント`) != 0, CASE SUBSTR(`コメント`, LOCATE('〜', `コメント`) -3, 2) WHEN '08' THEN '01' ELSE SUBSTR(`コメント`, LOCATE('〜', `コメント`) -3, 2) END, '' ) ,IF(`送付先一致フラグ`=0,CONCAT('注文者:',CONCAT(`注文者名字`,`注文者名前`)),''),REPLACE(`コメント`,'\r\n',''),'','','' from `ponpare_original` left join`items_info` on  ponpare_original.`商品管理ID`=items_info.id  and items_info.mall='ポンパレモール'";
+    $sql = "INSERT INTO summary SELECT '','ポンパレモール' ,`注文番号`,REPLACE ( SUBSTR( `注文日時`, 1, 10 ), '-', '/' ), SUBSTR(`注文日時`, 11),CURDATE(),CONCAT(`注文者名字`,`注文者名前`) ,CONCAT(`注文者名字フリガナ`,`注文者名前フリガナ`) ,CONCAT(`注文者郵便番号1`,'-',`注文者郵便番号2`), CONCAT(`注文者住所：都道府県`,`注文者住所：市区町村以降`),INSERT(`注文者電話番号`,4,0,'-'),`商品名` ,name ,id,`個数`,unit * `個数`,単価, CONCAT(`送付先名字`,`送付先名前`) ,CONCAT(`送付先名字フリガナ`,`送付先名前フリガナ`),CONCAT(`送付先郵便番号1`, '-',`送付先郵便番号2`),CONCAT(`送付先住所：都道府県`,`送付先住所：市区町村以降`),INSERT(`送付先電話番号`,4,0,'-'),IF( `コメント` REGEXP '^.*-.*-.*\(.*).*$', SUBSTR(`コメント`, 11, 10), '' ) , IF( LOCATE('〜', `コメント`) != 0, CASE SUBSTR(`コメント`, LOCATE('〜', `コメント`) -3, 2) WHEN '08' THEN '01' ELSE SUBSTR(`コメント`, LOCATE('〜', `コメント`) -3, 2) END, '' ) ,IF(`送付先一致フラグ`=0,CONCAT('注文者:',CONCAT(`注文者名字`,`注文者名前`)),''),REPLACE(`コメント`,'\r\n',''),'','','' from `ponpare_original` left join`items_info` on  ponpare_original.`商品管理ID`=items_info.id  and items_info.mall='ポンパレモール'";
     //SQL END
     if ($conn->query($sql) === TRUE) {
         echo "Insert ponpare data successfully";
@@ -246,12 +246,12 @@ if(isset($_POST["amazonUpload"]) && $_FILES["amazon_to_ship"]["error"] == UPLOAD
     12,
     8
   ),
-  CURDATE(), amazon_order.`buyer-name`, '', '', '', amazon_order.`buyer-phone-number`, `amazon_order`.`product-name`, items_info.name, items_info.id, amazon_to_ship.`quantity-purchased`, items_info.unit * `amazon_to_ship`.`quantity-purchased`, `amazon_order`.`item-price` / amazon_order.`quantity-purchased`, `amazon_order`.`recipient-name`, '', `amazon_order`.`ship-postal-code`, CONCAT(
+  CURDATE(), amazon_order.`buyer-name`, '', '', '',Insert( amazon_order.`buyer-phone-number`,4,0,'-'), `amazon_order`.`product-name`, items_info.name, items_info.id, amazon_to_ship.`quantity-purchased`, items_info.unit * `amazon_to_ship`.`quantity-purchased`, `amazon_order`.`item-price` / amazon_order.`quantity-purchased`, `amazon_order`.`recipient-name`, '', `amazon_order`.`ship-postal-code`, CONCAT(
     amazon_order.`ship-address-1`,
     amazon_order.`ship-address-2`,
     amazon_order.`ship-address-3`
   ),
-  `amazon_order`.`ship-phone-number`,
+  Insert(`amazon_order`.`ship-phone-number`,4,0,'-'),
   substr(`amazon_to_ship`.`scheduled-delivery-start-date`,1,10),
   substr(`amazon_to_ship`.`scheduled-delivery-start-date`,12,8),
   IF(
