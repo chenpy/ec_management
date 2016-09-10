@@ -3,10 +3,13 @@ EC management
 
 TODO tasks
 
-//當場
-安裝PHP+MYSQL+PHPMyAdmin
-每個功能逐步確認
-如何備份
+//20160910
+1.安裝PHP+MYSQL+PHPMyAdmin
+http://www.wampserver.com/en/
+2.每個功能逐步確認
+3.如何備份
+4.匯入資料表
+5.電話號碼格式確認
 
 
 
@@ -14,6 +17,7 @@ TODO tasks
 //2. Coupon site
 *產生大table
 *本日matome匯出
+*新增商品資料
 
  Racoupon
 * 產生原始table
