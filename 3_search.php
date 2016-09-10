@@ -64,7 +64,7 @@ if($_POST["shipDate"] != ""){
 
 $appendSql.=" 1";
 
-echo "<br>".$sql.$appendSql."<br>";
+//echo "<br>".$sql.$appendSql."<br>";
 
 
 echo "<table border='1'>

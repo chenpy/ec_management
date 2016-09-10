@@ -51,12 +51,10 @@ if(isset($_POST["submit"]) && $_FILES["uploadedCsv"]["error"] == UPLOAD_ERR_OK){
 </head>
 <meta charset="UTF-8">
 <body>
-<h1>データアップロード</h1>
+<h1>追跡番号アップロード</h1>
   <form method="post" enctype="multipart/form-data">
       <input type="file" name="uploadedCsv">
       <input type="submit" value="Upload" name="submit">
   </form>
-  <p>Note: Key　受注番号＋送付先住所＋商品</p>
-  <p>Note: </p>
 </body>
 </html>

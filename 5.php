@@ -27,7 +27,7 @@
   <?php 
       if(isset($_POST["search"])){
             $sql = "select * from items_info where mall='".$_POST["mall"]."';";
-            echo $sql;
+            //echo $sql;
             echo "<br>";
             $result = $conn->query($sql);
             echo "<table border='1'>

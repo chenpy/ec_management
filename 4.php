@@ -36,9 +36,7 @@ if(isset($_POST["search"])){
     $appendSql .= " `注文番号` = '$_POST[trackId]' AND";
   }
 
-
   $appendSql.=" 1";
-  echo "<br>".$sql.$appendSql."<br>";
 
  
   $result = $conn->query($sql.$appendSql);
@@ -123,7 +121,7 @@ if(isset($_POST["update"])){
     注文番号: <input type="text" name="orderId"><br>
     お問い合わせ番号: <input type="text" name="trackId"><br>
     <input type="submit" value="検索" name="search"><br>
-    Current Order ID = <?php echo $orderId; ?>
+    選択された注文番号: <?php echo $orderId; ?>
     <input type="hidden" name="orderIdConfirmed" value="<?php echo $orderId; ?>">
     再発送お問い合わせ番号: <input type="text" name="resendTrackId"><br>
     処理コメント: <input type="text" name="workComment"><br>

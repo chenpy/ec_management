@@ -34,7 +34,7 @@ if(isset($_POST["yahooUpload"]) && $_FILES["yahoo_items_info"]["error"] == UPLOA
 	LINES TERMINATED BY '\r\n'
 	IGNORE 1 ROWS";
 	if ($conn->query($sql) === TRUE) {
-        echo "Insert data successfully";
+        echo "Insert data successfully<br>";
     } else {
        	echo "Error Insert table: " . $conn->error;
     }
@@ -51,7 +51,7 @@ if(isset($_POST["yahooUpload"]) && $_FILES["yahoo_items_info"]["error"] == UPLOA
     IGNORE 1 ROWS";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Insert data successfully";
+        echo "Insert data successfully<br>";
     } else {
         echo "Error Insert table: " . $conn->error;
     }
@@ -112,7 +112,7 @@ WHERE
 ";
     //SQL END
     if ($conn->query($sql) === TRUE) {
-        echo "Insert data successfully";
+        echo "Insert data successfully<br>";
     } else {
         echo "Error Insert table: " . $conn->error;
     }
@@ -135,7 +135,7 @@ if(isset($_POST["rakutenUpload"]) && $_FILES["rakuten"]["error"] == UPLOAD_ERR_O
     IGNORE 1 ROWS";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Insert data successfully";
+        echo "Insert data successfully<br>";
     } else {
         echo "Error Insert table: " . $conn->error;
     }
@@ -147,7 +147,7 @@ if(isset($_POST["rakutenUpload"]) && $_FILES["rakuten"]["error"] == UPLOAD_ERR_O
         items_info.id = rakuten_original.`商品ID`)";
 //SQL END
     if ($conn->query($sql) === TRUE) {
-        echo "Insert rakuten data successfully";
+        echo "Insert rakuten data successfully<br>";
     } else {
         echo "Error Insert table: " . $conn->error;
     }
@@ -173,7 +173,7 @@ if(isset($_POST["ponpareUpload"]) && $_FILES["ponpare"]["error"] == UPLOAD_ERR_O
     IGNORE 1 ROWS";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Insert ponpare data successfully";
+        echo "Insert ponpare data successfully<br>";
     } else {
         echo "Error Insert table: " . $conn->error;
     }
@@ -184,7 +184,7 @@ if(isset($_POST["ponpareUpload"]) && $_FILES["ponpare"]["error"] == UPLOAD_ERR_O
     $sql = "INSERT INTO summary SELECT '','ポンパレモール' ,`注文番号`,REPLACE ( SUBSTR( `注文日時`, 1, 10 ), '-', '/' ), SUBSTR(`注文日時`, 11),CURDATE(),CONCAT(`注文者名字`,`注文者名前`) ,CONCAT(`注文者名字フリガナ`,`注文者名前フリガナ`) ,CONCAT(`注文者郵便番号1`,'-',`注文者郵便番号2`), CONCAT(`注文者住所：都道府県`,`注文者住所：市区町村以降`),INSERT(`注文者電話番号`,4,0,'-'),`商品名` ,name ,id,`個数`,unit * `個数`,単価, CONCAT(`送付先名字`,`送付先名前`) ,CONCAT(`送付先名字フリガナ`,`送付先名前フリガナ`),CONCAT(`送付先郵便番号1`, '-',`送付先郵便番号2`),CONCAT(`送付先住所：都道府県`,`送付先住所：市区町村以降`),INSERT(`送付先電話番号`,4,0,'-'),IF( `コメント` REGEXP '^.*-.*-.*\(.*).*$', SUBSTR(`コメント`, 11, 10), '' ) , IF( LOCATE('〜', `コメント`) != 0, CASE SUBSTR(`コメント`, LOCATE('〜', `コメント`) -3, 2) WHEN '08' THEN '01' ELSE SUBSTR(`コメント`, LOCATE('〜', `コメント`) -3, 2) END, '' ) ,IF(`送付先一致フラグ`=0,CONCAT('注文者:',CONCAT(`注文者名字`,`注文者名前`)),''),REPLACE(`コメント`,'\r\n',''),'','','' from `ponpare_original` left join`items_info` on  ponpare_original.`商品管理ID`=items_info.id  and items_info.mall='ポンパレモール'";
     //SQL END
     if ($conn->query($sql) === TRUE) {
-        echo "Insert ponpare data successfully";
+        echo "Insert ponpare data successfully<br>";
     } else {
         echo "Error Insert table: " . $conn->error;
     }
@@ -208,7 +208,7 @@ if(isset($_POST["amazonUpload"]) && $_FILES["amazon_to_ship"]["error"] == UPLOAD
   IGNORE 1 ROWS";
 
   if ($conn->query($sql) === TRUE) {
-        echo "Insert data successfully";
+        echo "Insert data successfully<br>";
     } else {
         echo "Error Insert table: " . $conn->error;
     }
@@ -224,7 +224,7 @@ if(isset($_POST["amazonUpload"]) && $_FILES["amazon_to_ship"]["error"] == UPLOAD
     IGNORE 1 ROWS";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Insert data successfully";
+        echo "Insert data successfully<br>";
     } else {
         echo "Error Insert table: " . $conn->error;
     }
@@ -278,7 +278,7 @@ ON
 ";
     //SQL END
     if ($conn->query($sql) === TRUE) {
-        echo "Insert data successfully";
+        echo "Insert data successfully<br>";
     } else {
         echo "Error Insert table: " . $conn->error;
     }
@@ -306,7 +306,7 @@ if(isset($_POST["q10Upload"]) && $_FILES["q10"]["error"] == UPLOAD_ERR_OK ){
     IGNORE 1 ROWS";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Insert q10 data successfully";
+        echo "Insert q10 data successfully<br>";
     } else {
         echo "Error Insert table: " . $conn->error;
     }
@@ -317,7 +317,7 @@ if(isset($_POST["q10Upload"]) && $_FILES["q10"]["error"] == UPLOAD_ERR_OK ){
     $sql = "insert into summary SELECT '', 'Qoo10', `注文番号`, SUBSTR(`注文日`, 1, LOCATE(' ', `注文日`) -1), SUBSTR(`注文日`, LOCATE(' ', `注文日`), 7), CURDATE(), `購入者名`, `購入者名(フリガナ)`, '', '',IF(`購入者電話番号` != '', `購入者電話番号`, `購入者携帯電話番号`), `商品名`, items_info.name, items_info.id, `数量`, items_info.unit * `数量`, `販売価格`, `受取人名`, `受取人名(フリガナ)`, `郵便番号`, `住所`, IF(`受取人電話番号` != '-', `受取人電話番号`, `受取人携帯電話番号`), `お届け希望日`, '', IF( `購入者名` != `受取人名`, CONCAT('注文者: ', `購入者名`), '' ), `配送要請事項`, '', '', '' FROM q10_original LEFT JOIN items_info ON `商品番号` = items_info.id";
     //SQL END
     if ($conn->query($sql) === TRUE) {
-        echo "Insert ponpare data successfully";
+        echo "Insert ponpare data successfully<br>";
     } else {
         echo "Error Insert table: " . $conn->error;
     }
