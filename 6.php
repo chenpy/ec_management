@@ -22,17 +22,17 @@ if(isset($_POST["submit"]) && $_FILES["uploadedCsv"]["error"] == UPLOAD_ERR_OK){
             ENCLOSED BY '\"'
             LINES TERMINATED BY '\r\n'
             IGNORE 1 ROWS";
-  echo $sql;
+  //echo $sql;
   if ($conn->query($sql) === TRUE) {
-        echo "Insert data successfully";
+        echo "Insert data successfully<br>";
   } else {
         echo "Error Insert table: " . $conn->error;
   }
   //UPDATE COLUMN
-  $sql = "UPDATE summary left join summary_temp on summary.`モール` = summary_temp.`モール` AND summary.`注文番号`= summary_temp.`注文番号` AND summary.`商品id`= summary_temp.`商品id`  SET    summary.`お問い合わせ番号` = summary_temp.`お問い合わせ番号`;";
-  echo $sql;
+  $sql = "UPDATE summary inner join summary_temp on summary.`モール` = summary_temp.`モール` AND summary.`注文番号`= summary_temp.`注文番号` SET   summary.`お問い合わせ番号` = summary_temp.`お問い合わせ番号`;";
+ // echo $sql;
   if ($conn->query($sql) === TRUE) {
-        echo "Update data successfully";
+        echo "Update data successfully<br>";
   } else {
         echo "Error update table: " . $conn->error;
   }

@@ -56,9 +56,9 @@
     <br>商品ID: <input type="text" name="productId"><br><br>
     宅配商品名: 
     <select name="name">
-      <option value="500ml">500ml</option>
-      <option value="2L">2L</option>
-      <option value="500ml+2L">500ml+2L</option>
+      <option value="５００ｍｌ">500ml</option>
+      <option value="２Ｌ">2L</option>
+      <option value="５００ｍｌ＋２Ｌ">500ml+2L</option>
     </select><br><br>
     計算単位: 
     <select name="unit">
