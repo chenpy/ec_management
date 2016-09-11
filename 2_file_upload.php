@@ -53,25 +53,38 @@ if(isset($_POST["grouponUpload"]) && $_FILES["groupon"]["error"] == UPLOAD_ERR_O
     $name = basename($_FILES["groupon"]["name"]);
     move_uploaded_file($tmp_name, "uploads/$name");
     // convert xls to csv
+    $grouponXlsPath="/Library/WebServer/Documents/uploads/".$_FILES[groupon][name];
+    $grouponUtf8CSVPath="/Library/WebServer/Documents/uploads/".$_FILES[groupon][name]."utf8.csv";
+    $grouponSjisCSVPath="/Library/WebServer/Documents/uploads/".$_FILES[groupon][name]."sjis.csv";
     require "Classes/PHPExcel/IOFactory.php";
-    $objPHPExcel = PHPExcel_IOFactory::load("/Library/WebServer/Documents/uploads/".$_FILES[groupon][name]);
+    $objPHPExcel = PHPExcel_IOFactory::load($grouponXlsPath);
     $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel,'CSV');
-    $objWriter->save("/Library/WebServer/Documents/uploads/".$_FILES[groupon][name].".csv");
+    $objWriter->save($grouponUtf8CSVPath);
 
-    //TODO load csv to database
-    // delete_old_data('groupon_original',$conn);
-    // $sql = "LOAD DATA LOCAL INFILE "."'/Library/WebServer/Documents/uploads/".$_FILES[ponpare][name]."'
-    // INTO TABLE groupon_orig
-    // FIELDS TERMINATED BY ',' 
-    // ENCLOSED BY '\"'
-    // LINES TERMINATED BY '\r\n'
-    // IGNORE 1 ROWS";
+    // Convert the encoding from UTF8 to Shift-jis
+    $utf8CSV = file_get_contents($grouponUtf8CSVPath);
+    $sjisCSV = mb_convert_encoding($utf8CSV,"sjis-win","UTF-8");
+    file_put_contents($grouponSjisCSVPath, $sjisCSV);
 
-    // if ($conn->query($sql) === TRUE) {
-    //     echo "Insert groupon data successfully<br>";
-    // } else {
-    //     echo "Error Insert table: " . $conn->error;
-    // }
+    // load csv to database
+    delete_old_data('groupon_orig',$conn);
+    // NOTICE: If it is windows, please change \n to \r\n
+    $sql = "LOAD DATA LOCAL INFILE "."'$grouponSjisCSVPath'
+    INTO TABLE groupon_orig
+    FIELDS TERMINATED BY ',' 
+    ENCLOSED BY '\"'
+    LINES TERMINATED BY '\n'
+    IGNORE 1 ROWS";
+    echo $sql;
+    if ($conn->query($sql) === TRUE) {
+        echo "Insert groupon data successfully<br>";
+    } else {
+        echo "Error Insert table: " . $conn->error;
+    }
+    // Delete
+    unlink($grouponXlsPath);
+    unlink($grouponUtf8CSVPath);
+    unlink($grouponSjisCSVPath);
 }
 // Groupon END
 
