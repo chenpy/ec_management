@@ -43,31 +43,37 @@ if(isset($_POST["racouponUpload"]) && $_FILES["racoupon"]["error"] == UPLOAD_ERR
 }
 // Racoupon END
 
-// // groupon start 
+// groupon start 
 
-// if(isset($_POST["grouponUpload"]) && $_FILES["groupon"]["error"] == UPLOAD_ERR_OK ){
-//     // groupon items information handling
-//     $tmp_name = $_FILES["groupon"]["tmp_name"];
-//     // basename() may prevent filesystem traversal attacks;
-//     // further validation/sanitation of the filename may be appropriate
-//     // TODO handle *.xls format
-//     $name = basename($_FILES["groupon"]["name"]);
-//     move_uploaded_file($tmp_name, "uploads/$name");
-//     delete_old_data('groupon_original',$conn);
-//     $sql = "LOAD DATA LOCAL INFILE "."'/Library/WebServer/Documents/uploads/".$_FILES[ponpare][name]."'
-//     INTO TABLE groupon_orig
-//     FIELDS TERMINATED BY ',' 
-//     ENCLOSED BY '\"'
-//     LINES TERMINATED BY '\r\n'
-//     IGNORE 1 ROWS";
+if(isset($_POST["grouponUpload"]) && $_FILES["groupon"]["error"] == UPLOAD_ERR_OK ){
+    // groupon items information handling
+    $tmp_name = $_FILES["groupon"]["tmp_name"];
+    // basename() may prevent filesystem traversal attacks;
+    // further validation/sanitation of the filename may be appropriate
+    $name = basename($_FILES["groupon"]["name"]);
+    move_uploaded_file($tmp_name, "uploads/$name");
+    // convert xls to csv
+    require "Classes/PHPExcel/IOFactory.php";
+    $objPHPExcel = PHPExcel_IOFactory::load("/Library/WebServer/Documents/uploads/".$_FILES[groupon][name]);
+    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel,'CSV');
+    $objWriter->save("/Library/WebServer/Documents/uploads/".$_FILES[groupon][name].".csv");
 
-//     if ($conn->query($sql) === TRUE) {
-//         echo "Insert groupon data successfully<br>";
-//     } else {
-//         echo "Error Insert table: " . $conn->error;
-//     }
-// }
-// // Groupon END
+    //TODO load csv to database
+    // delete_old_data('groupon_original',$conn);
+    // $sql = "LOAD DATA LOCAL INFILE "."'/Library/WebServer/Documents/uploads/".$_FILES[ponpare][name]."'
+    // INTO TABLE groupon_orig
+    // FIELDS TERMINATED BY ',' 
+    // ENCLOSED BY '\"'
+    // LINES TERMINATED BY '\r\n'
+    // IGNORE 1 ROWS";
+
+    // if ($conn->query($sql) === TRUE) {
+    //     echo "Insert groupon data successfully<br>";
+    // } else {
+    //     echo "Error Insert table: " . $conn->error;
+    // }
+}
+// Groupon END
 
 //Ponpare start
 
