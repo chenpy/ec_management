@@ -30,6 +30,7 @@ INTO OUTFILE
     $objPHPExcel = $objCSVReader->load($csvFilePath);
     $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel,'Excel5');
     $objWriter->save($xlsFilePath);
+    header("Location: uploads/uploadTest.xls");
 }
 //Generate CSV end
 ?>
