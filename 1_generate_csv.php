@@ -1,8 +1,9 @@
 <?php
 // Connect to database
 include 'mysql_connect.php';
-$csvFilePath="/Library/WebServer/Documents/uploads/uploadTest.csv";
-$xlsFilePath = "/Library/WebServer/Documents/uploads/uploadTest.xls";
+$fileName = date("md")."モール--- NGWジャパン";
+$csvFilePath="/Library/WebServer/Documents/uploads/".$fileName.".csv";
+$xlsFilePath = "/Library/WebServer/Documents/uploads/".$fileName.".xls";
 //Generate CSV start 
 if(isset($_POST["generateCsv"])){
     unlink($csvFilePath);
@@ -30,7 +31,7 @@ INTO OUTFILE
     $objPHPExcel = $objCSVReader->load($csvFilePath);
     $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel,'Excel5');
     $objWriter->save($xlsFilePath);
-    header("Location: uploads/uploadTest.xls");
+    header("Location: uploads/".$fileName.".xls");
 }
 //Generate CSV end
 ?>
