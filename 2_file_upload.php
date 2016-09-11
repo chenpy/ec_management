@@ -110,6 +110,83 @@ if(isset($_POST["ponpareUpload"]) && $_FILES["ponpare"]["error"] == UPLOAD_ERR_O
     } else {
         echo "Error Insert table: " . $conn->error;
     }
+
+  // Insert into summary table
+    //SQL BEGIN
+    delete_summary_old_data("ポンパレチケット",$conn);
+    $sql = "INSERT
+INTO
+  summary(
+  SELECT
+    '',
+    'ポンパレチケット',
+    `購入ID`,
+    '',
+    '',
+    CURDATE(), CONCAT(`姓`, `名`),
+    CONCAT(`姓カナ`, `名カナ`),
+  INSERT
+    (`郵便番号`, 4, 0, '-'),
+    CONCAT(`都道府県`, `市区町村・住所・マンション・アパート名`),
+  INSERT
+    (`電話番号`, 4, 0, '-'),
+    '',
+    items_info.name,
+    items_info.id,
+    `購入枚数`,
+    `購入枚数` * items_info.unit,
+    items_info.couponSitePrice,
+    IF(
+      `送付先変更` = '',
+      CONCAT(`姓`, `名`),
+      CONCAT(`プレゼント送付先姓`, `プレゼント送付先名`)
+    ),
+    IF(
+      `送付先変更` = '',
+      CONCAT(`姓カナ`, `名カナ`),
+      CONCAT(`プレゼント送付先姓`, `プレゼント送付先名`)
+    ),
+    IF(
+      `送付先変更` = '',
+    INSERT
+      (`郵便番号`, 4, 0, '-'),
+    INSERT
+      (`プレゼント送付先郵便番号`, 4, 0, '-')
+    ),
+    IF(
+      `送付先変更` = '',
+      CONCAT(`都道府県`, `市区町村・住所・マンション・アパート名`),
+      CONCAT(
+        `プレゼント送付先都道府県`,
+        `プレゼント送付先市区町村・住所・マンション・アパート名`
+      )
+    ),
+    IF(
+      `送付先変更` = '',
+    INSERT
+      (`電話番号`, 4, 0, '-'),
+    INSERT
+      (`プレゼント送付先電話番号`, 4, 0, '-')
+    ),
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    ''
+  FROM
+    `ponparetic_orig`
+  LEFT JOIN
+    `items_info`
+  ON
+    items_info.id = '100' AND mall = 'ポンパレチケット')";
+    //SQL END
+    if ($conn->query($sql) === TRUE) {
+        echo "Insert ponpare data successfully<br>";
+    } else {
+        echo "Error Insert table: " . $conn->error;
+    }
 }
 
 //ponpare end
