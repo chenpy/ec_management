@@ -213,6 +213,54 @@ if(isset($_POST["3pleUpload"]) && $_FILES["3ple"]["error"] == UPLOAD_ERR_OK ){
     } else {
         echo "Error Insert table: " . $conn->error;
     }
+
+      // Insert into summary table
+    //SQL BEGIN
+    delete_summary_old_data("サンプル百貨店",$conn);
+    $sql = "INSERT
+  INTO
+  summary(
+  SELECT
+    '',
+    'サンプル百貨店',
+    `受注ＩＤ`,
+    `注文日`,
+    '',
+    CURDATE(), CONCAT(`姓`, `名`),
+    CONCAT(`姓カナ`, `名カナ`),
+    `郵便番号`,
+    CONCAT(`都道府県`, `住所`),
+    `電話番号`,
+    `掲載名`,
+    '1',
+    items_info.id,
+    items_info.unit,
+    items_info.unit,
+    items_info.couponSitePrice,
+    CONCAT(`姓`, `名`),
+    CONCAT(`姓カナ`, `名カナ`),
+    `郵便番号`,
+    CONCAT(`都道府県`, `住所`),
+    `電話番号`,
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    ''
+  FROM
+    `3ple_orig`
+  LEFT JOIN
+    `items_info`
+  ON
+    items_info.id = `掲載ＩＤ` AND mall = 'サンプル百貨店')";
+    //SQL END
+    if ($conn->query($sql) === TRUE) {
+        echo "Insert 3ple data successfully<br>";
+    } else {
+        echo "Error Insert table: " . $conn->error;
+    }
   }
 //3ple end
 ?>
