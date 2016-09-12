@@ -85,6 +85,60 @@ if(isset($_POST["grouponUpload"]) && $_FILES["groupon"]["error"] == UPLOAD_ERR_O
     unlink($grouponXlsPath);
     unlink($grouponUtf8CSVPath);
     unlink($grouponSjisCSVPath);
+
+
+    // Insert into summary table
+    //SQL BEGIN
+    delete_summary_old_data("グルーポン",$conn);
+    $sql = "INSERT
+INTO
+  summary(
+SELECT
+  '',
+  'グルーポン',
+  `OID`,
+  SUBSTR(`購入日`, 1, 10),
+  SUBSTR(`購入日`, 12, 8),
+  CURDATE(), CONCAT(`注文者_姓`, `注文者_名`),
+  '',
+INSERT
+  (`配送先_郵便番号`, 4, 0, '-'),
+  `注文者_住所`,
+INSERT
+  (`注文者_電話番号`, 4, 0, '-'),
+  `商品名`,
+  items_info.name,
+  items_info.id,
+  `商品のオーダー数`,
+  `商品のオーダー数` * items_info.unit,
+  items_info.couponSitePrice,
+  CONCAT(`配達先姓`, `配達先名`),
+  '',
+INSERT
+  (`配送先_郵便番号`, 4, 0, '-'),
+  `配達先住所`,
+INSERT
+  (`配送先_電話番号`, 4, 0, '-'),
+  '',
+  '',
+  '',
+  IF( CONCAT(`注文者_姓`, `注文者_名`) != CONCAT(`配達先姓`, `配達先名`), CONCAT('注文者: ', CONCAT(`注文者_姓`, `注文者_名`)), '' ),
+  '',
+  '',
+  ''
+FROM
+  `groupon_orig`
+LEFT JOIN
+  `items_info`
+ON
+  items_info.id = `CDA` AND mall = 'グルーポン'
+  )";
+    //SQL END
+    if ($conn->query($sql) === TRUE) {
+        echo "Insert ponpare data successfully<br>";
+    } else {
+        echo "Error Insert table: " . $conn->error;
+    }
 }
 // Groupon END
 
