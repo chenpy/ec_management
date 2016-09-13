@@ -14,6 +14,8 @@ SELECT
   `モール`,`注文番号`,`送付先氏名`,`送付先郵便番号`,`送付先住所`,`送付先電話番号`,`宅配商品`,`出荷個数`,`配達日指定`,`配達時間指定`,`ネットコメント`,`注文者と送付先は異なる`
 FROM
   summary
+WHERE
+    `モール`='Yahoo' OR `モール`='Amazon' OR `モール`='Rakuten' OR `モール`='ポンパレモール' OR `モール`='Qoo10' 
 INTO OUTFILE
   '$csvFilePath' FIELDS ENCLOSED BY '\"' TERMINATED BY ',' ESCAPED BY '\"' LINES TERMINATED BY '\r\n' ";
 
