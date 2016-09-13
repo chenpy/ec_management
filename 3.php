@@ -26,11 +26,35 @@
   名前(カタカナ相似比較): <input type="text" name="katakanaName"><br>
 
   注文期間: <input type="text" name="startYear">年
-  <input type="text" name="startMonth">月
-  <input type="text" name="startDay">日　〜  <br>
+  <select name="startMonth">
+  <?php
+    for ($x = 1; $x <= 12; $x++) {
+      echo "<option value=\"$x\">$x</option>";
+    }
+  ?> 
+  </select>月
+  <select name="startDay">
+  <?php
+    for ($x = 1; $x <= 31; $x++) {
+      echo "<option value=\"$x\">$x</option>";
+    }
+  ?> 
+  </select>日　〜  <br>
   <input type="text" name="endYear">年
-  <input type="text" name="endMonth">月
-  <input type="text" name="endDay">日
+  <select name="endMonth">
+  <?php
+    for ($x = 1; $x <= 12; $x++) {
+      echo "<option value=\"$x\">$x</option>";
+    }
+  ?> 
+  </select>月
+  <select name="endDay">
+  <?php
+    for ($x = 1; $x <= 31; $x++) {
+      echo "<option value=\"$x\">$x</option>";
+    }
+  ?> 
+  </select>日
   <br>
 
 
