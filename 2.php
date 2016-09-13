@@ -42,9 +42,9 @@
 		</form>
   	</div>
   	<div class="upload">
-  		<form action="upload.php" method="post" enctype="multipart/form-data">
-    		本日出荷資料まとめ
-		</form>
+  	     <form action="2_generate_csv.php" method="post" enctype="multipart/form-data">
+        本日出荷資料まとめ
+        <input type="submit" value="Generate" name="generateCsv">
   	</div>
 </body>
 </html>
