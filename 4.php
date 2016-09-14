@@ -1,34 +1,11 @@
-<?php
+  <?php
 // Connect to database
 include 'mysql_connect.php';
+header('Content-type: text/html; charset=utf-8');
 if(isset($_POST["search"])){
   $sql= "SELECT * from summary where";
-  $appendSQL = "";
-  //  Make mall search string
-  switch ($_POST["mall"]) {
-    case 'Yahoo':
-      $appendSql .= " `モール` = 'Yahoo' AND";
-      break;
-  
-    case 'ポンパレモール':
-      $appendSql .= " `モール` = 'ポンパレモール' AND";
-      break;
-  
-    case 'Qoo10':
-      $appendSql .= " `モール` = 'Qoo10' AND";
-      break;
-  
-    case 'Amazon':
-      $appendSql .= " `モール` = 'Amazon' AND";
-      break;
-  
-    case 'Rakuten':
-      $appendSql .= " `モール` = 'Rakuten' AND";
-      break;
+  $appendSql = " `モール` = '$_POST[mall]' AND";
 
-    default:
-      break;
-  }
   if($_POST["orderId"]!= ""){
     $appendSql .= " `注文番号` = '$_POST[orderId]' AND";
   }
@@ -38,7 +15,6 @@ if(isset($_POST["search"])){
 
   $appendSql.=" 1";
 
- 
   $result = $conn->query($sql.$appendSql);
   if ($result->num_rows > 0) {
           echo "<table border='1'>
@@ -117,6 +93,10 @@ if(isset($_POST["update"])){
     <option value="Amazon">アマゾン</option>
     <option value="ポンパレモール">ポンパレモール</option>
     <option value="Qoo10">Qoo10</option>
+    <option value="ラクーポン">ラクーポン</option>
+    <option value="サンプル百貨店">サンプル百貨店</option>
+    <option value="ポンパレチケット">ポンパレチケット</option>
+    <option value="グルーポン">グルーポン</option>
   </select><br>
     注文番号: <input type="text" name="orderId"><br>
     お問い合わせ番号: <input type="text" name="trackId"><br>

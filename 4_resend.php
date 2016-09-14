@@ -3,32 +3,8 @@
 include 'mysql_connect.php';
 
 $sql= "SELECT * from summary where";
-$appendSql = "";
-//  Make mall search string
-switch ($_POST["mall"]) {
-  case 'Yahoo':
-    $appendSql .= " `モール` = 'Yahoo' AND";
-    break;
-  
-  case 'ポンパレモール':
-    $appendSql .= " `モール` = 'ポンパレモール' AND";
-    break;
-  
-  case 'Qoo10':
-    $appendSql .= " `モール` = 'Qoo10' AND";
-    break;
-  
-  case 'Amazon':
-    $appendSql .= " `モール` = 'Amazon' AND";
-    break;
-  
-  case 'Rakuten':
-    $appendSql .= " `モール` = 'Rakuten' AND";
-    break;
+$appendSql = " `モール` = '$_POST[mall]' AND";
 
-  default:
-    break;
-}
 //注文番号
 if($_POST["orderId"]!= ""){
   $appendSql .= " `注文番号` = '$_POST[orderId]' AND";
