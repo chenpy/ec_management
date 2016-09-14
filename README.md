@@ -3,7 +3,7 @@ EC management
 
 TODO tasks  
 // 20160913  
- 需要將path獨立出來，在windows才可快速deploy  
+ []需要將path獨立出來，在windows才可快速deploy  
  
 //20160910 新增需求 & 已發現bug  
   
@@ -29,9 +29,9 @@ Unit->計算単位
   
 []5.資料匯入之後，匯入成功之後的畫面，直接顯示 Successfully  
    
-[]Generate  bottom改成　Export Successfully  
-[x]Generate 出來的檔案要改檔名 0822　モール---NGWジャパン、  
-[]0822　クーポンーーNGWジャパン  
+[]Generate  botton改成　Export Successfully  
+[x]Generate 出來的檔案要改檔名 0822　モール---NGWジャパン、
+   0822　クーポンーーNGWジャパン  
   
 [x]6. Generate 後出來的檔案 多加下載的功能  
 []7. 再發送,處理   有亂碼問題  
@@ -48,12 +48,12 @@ http://www.wampserver.com/en/
   
 //2. Coupon site TODO  
 [x]*本日matome匯出  
-[]*新增商品ID  
-[]*商品ＩＤ介面新增四個mall  
+[x]*新增商品ID  
+[x]*商品ＩＤ介面新增四個mall  
 [x]*本日出荷資料まとめ的資料選取， coupon site , mall要分開  
-[]*搜尋功能新增coupon site  
-[]*在發送功能新增coupon site  
-[]*下面加上CHECK BOX (☑　前回アップ資料削除)  
+[x]*搜尋功能新增coupon site  
+[x]*在發送功能新增coupon site  
+[x]*下面加上CHECK BOX (☑　前回アップ資料削除)  
 
   
  Racoupon  
