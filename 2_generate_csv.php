@@ -1,7 +1,7 @@
 <?php
 // Connect to database
 include 'mysql_connect.php';
-$fileName = date("md")."モール--- NGWジャパン";
+$fileName = date("md")."クーポンーー NGWジャパン";
 $csvFilePath="/Library/WebServer/Documents/uploads/".$fileName.".csv";
 $xlsFilePath = "/Library/WebServer/Documents/uploads/".$fileName.".xls";
 //Generate CSV start 
@@ -15,7 +15,7 @@ SELECT
 FROM
   summary
 WHERE
-    `モール`='Yahoo' OR `モール`='Amazon' OR `モール`='Rakuten' OR `モール`='ポンパレモール' OR `モール`='Qoo10' 
+    `モール`='ラクーポン' OR `モール`='グルーポン' OR `モール`='ポンパレチケット' OR `モール`='サンプル百貨店' 
 INTO OUTFILE
   '$csvFilePath' FIELDS ENCLOSED BY '\"' TERMINATED BY ',' ESCAPED BY '\"' LINES TERMINATED BY '\r\n' ";
 
