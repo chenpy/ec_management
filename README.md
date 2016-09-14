@@ -7,7 +7,7 @@ TODO tasks
  
 //20160910 新增需求 & 已發現bug  
   
-[]1.検索画面  
+[x]1.検索画面  
 增加年為下拉式選單  
 月1-12,日1-31   
 
@@ -47,10 +47,10 @@ http://www.wampserver.com/en/
   
   
 //2. Coupon site TODO  
-[]*本日matome匯出  
+[x]*本日matome匯出  
 []*新增商品ID  
 []*商品ＩＤ介面新增四個mall  
-[]*本日出荷資料まとめ的資料選取， coupon site , mall要分開  
+[x]*本日出荷資料まとめ的資料選取， coupon site , mall要分開  
 []*搜尋功能新增coupon site  
 []*在發送功能新增coupon site  
 []*下面加上CHECK BOX (☑　前回アップ資料削除)  
@@ -60,7 +60,7 @@ http://www.wampserver.com/en/
 [x]* 產生原始table  
 [x]* 匯入CSV  
 [x]* 當天重複上傳，刪除舊的資料  
-[]* 匯入大table 1h  
+[x]* 匯入大table 1h  
 []* 整理PHP code  
   
 Ponpare ticket  
@@ -73,7 +73,7 @@ groupon
 [x]* 產生原始table  
 [x]* 匯入CSV  
 [x]* 當天重複上傳，刪除舊的資料  
-[]* 匯入大table 1h  
+[x]* 匯入大table 1h  
 []* 整理PHP code  
 3ple
 [x]* 產生原始table  
