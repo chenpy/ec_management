@@ -1,9 +1,10 @@
 <?php
 // Connect to database
 include 'mysql_connect.php';
+include 'path.php';
 $fileName = date("md")."クーポンーー NGWジャパン";
-$csvFilePath="/Library/WebServer/Documents/uploads/".$fileName.".csv";
-$xlsFilePath = "/Library/WebServer/Documents/uploads/".$fileName.".xls";
+$csvFilePath=$uploadPath.$fileName.".csv";
+$xlsFilePath = $uploadPath.$fileName.".xls";
 //Generate CSV start 
 if(isset($_POST["generateCsv"])){
     unlink($csvFilePath);

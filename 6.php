@@ -1,5 +1,6 @@
 <?php
 include 'mysql_connect.php';
+include 'path.php';
 function delete_old_data($tableName,$conn){
   $delete_old_sql="DELETE FROM $tableName WHERE DATE(`upload`) = CURDATE();";
   if ($conn->query($delete_old_sql) === TRUE) {
@@ -16,7 +17,7 @@ if(isset($_POST["submit"]) && $_FILES["uploadedCsv"]["error"] == UPLOAD_ERR_OK){
   $name = basename($_FILES["uploadedCsv"]["name"]);
   move_uploaded_file($tmp_name, "uploads/$name");
   delete_old_data('summary_temp',$conn);
-  $sql = "LOAD DATA LOCAL INFILE '/Library/WebServer/Documents/uploads/".$_FILES[uploadedCsv][name]."'
+  $sql = "LOAD DATA LOCAL INFILE '".$uploadPath.$_FILES[uploadedCsv][name]."'
             INTO TABLE summary_temp 
             FIELDS TERMINATED BY ',' 
             ENCLOSED BY '\"'

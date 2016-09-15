@@ -1,6 +1,7 @@
 <?php
 // Connect to database
 include 'mysql_connect.php';
+include 'path.php';
 
 function delete_old_data($tableName,$conn){
   $delete_old_sql="DELETE FROM $tableName WHERE DATE(`upload`) = CURDATE();";
@@ -30,7 +31,7 @@ if(isset($_POST["racouponUpload"]) && $_FILES["racoupon"]["error"] == UPLOAD_ERR
     if(isset($_POST["deleteRacoupon"])){
       delete_old_data('racoupon_orig',$conn);
     }
-    $sql = "LOAD DATA LOCAL INFILE "."'/Library/WebServer/Documents/uploads/".$_FILES[racoupon][name]."'
+    $sql = "LOAD DATA LOCAL INFILE '".$uploadPath.$_FILES[racoupon][name]."'
     INTO TABLE racoupon_orig
     FIELDS TERMINATED BY ',' 
     ENCLOSED BY '\"'
@@ -87,9 +88,9 @@ if(isset($_POST["grouponUpload"]) && $_FILES["groupon"]["error"] == UPLOAD_ERR_O
     $name = basename($_FILES["groupon"]["name"]);
     move_uploaded_file($tmp_name, "uploads/$name");
     // convert xls to csv
-    $grouponXlsPath="/Library/WebServer/Documents/uploads/".$_FILES[groupon][name];
-    $grouponUtf8CSVPath="/Library/WebServer/Documents/uploads/".$_FILES[groupon][name]."utf8.csv";
-    $grouponSjisCSVPath="/Library/WebServer/Documents/uploads/".$_FILES[groupon][name]."sjis.csv";
+    $grouponXlsPath=$uploadPath.$_FILES[groupon][name];
+    $grouponUtf8CSVPath=$uploadPath.$_FILES[groupon][name]."utf8.csv";
+    $grouponSjisCSVPath=$uploadPath.$_FILES[groupon][name]."sjis.csv";
     require "Classes/PHPExcel/IOFactory.php";
     $objPHPExcel = PHPExcel_IOFactory::load($grouponXlsPath);
     $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel,'CSV');
@@ -192,7 +193,7 @@ if(isset($_POST["ponpareUpload"]) && $_FILES["ponpare"]["error"] == UPLOAD_ERR_O
     if(isset($_POST["deletePonpare"])){
       delete_old_data('ponparetic_orig',$conn);
     }
-    $sql = "LOAD DATA LOCAL INFILE '/Library/WebServer/Documents/uploads/".$_FILES[ponpare][name]."'
+    $sql = "LOAD DATA LOCAL INFILE '".$uploadPath.$_FILES[ponpare][name]."'
   INTO TABLE ponparetic_orig 
   FIELDS TERMINATED BY ',' 
   ENCLOSED BY '\"'
@@ -299,7 +300,7 @@ if(isset($_POST["3pleUpload"]) && $_FILES["3ple"]["error"] == UPLOAD_ERR_OK ){
     if(isset($_POST["delete3ple"])){
       delete_old_data('3ple_orig',$conn);
     }
-    $sql = "LOAD DATA LOCAL INFILE "."'/Library/WebServer/Documents/uploads/".$_FILES['3ple'][name]."'
+    $sql = "LOAD DATA LOCAL INFILE '".$uploadPath.$_FILES['3ple'][name]."'
     INTO TABLE 3ple_orig
     FIELDS TERMINATED BY ',' 
     ENCLOSED BY '\"'
