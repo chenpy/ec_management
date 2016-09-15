@@ -27,7 +27,9 @@ if(isset($_POST["racouponUpload"]) && $_FILES["racoupon"]["error"] == UPLOAD_ERR
         // further validation/sanitation of the filename may be appropriate
     $name = basename($_FILES["racoupon"]["name"]);
     move_uploaded_file($tmp_name, "uploads/$name");
-    delete_old_data('racoupon_orig',$conn);
+    if(isset($_POST["deleteRacoupon"])){
+      delete_old_data('racoupon_orig',$conn);
+    }
     $sql = "LOAD DATA LOCAL INFILE "."'/Library/WebServer/Documents/uploads/".$_FILES[racoupon][name]."'
     INTO TABLE racoupon_orig
     FIELDS TERMINATED BY ',' 
@@ -43,7 +45,9 @@ if(isset($_POST["racouponUpload"]) && $_FILES["racoupon"]["error"] == UPLOAD_ERR
 
     // Insert into summary table
     //SQL BEGIN
-    delete_summary_old_data("ラクーポン",$conn);
+    if(isset($_POST["deleteRacoupon"])){
+      delete_summary_old_data("ラクーポン",$conn);
+    }
     $sql = "INSERT INTO summary (
     SELECT
   '',
@@ -97,7 +101,9 @@ if(isset($_POST["grouponUpload"]) && $_FILES["groupon"]["error"] == UPLOAD_ERR_O
     file_put_contents($grouponSjisCSVPath, $sjisCSV);
 
     // load csv to database
-    delete_old_data('groupon_orig',$conn);
+    if(isset($_POST["deleteGroupon"])){
+      delete_old_data('groupon_orig',$conn);
+    }
     // NOTICE: If it is windows, please change \n to \r\n
     $sql = "LOAD DATA LOCAL INFILE "."'$grouponSjisCSVPath'
     INTO TABLE groupon_orig
@@ -119,7 +125,9 @@ if(isset($_POST["grouponUpload"]) && $_FILES["groupon"]["error"] == UPLOAD_ERR_O
 
     // Insert into summary table
     //SQL BEGIN
-    delete_summary_old_data("グルーポン",$conn);
+    if(isset($_POST["deleteGroupon"])){
+      delete_summary_old_data("グルーポン",$conn);
+    }
     $sql = "INSERT
 INTO
   summary(
@@ -181,7 +189,9 @@ if(isset($_POST["ponpareUpload"]) && $_FILES["ponpare"]["error"] == UPLOAD_ERR_O
         // further validation/sanitation of the filename may be appropriate
     $name = basename($_FILES["ponpare"]["name"]);
     move_uploaded_file($tmp_name, "uploads/$name");
-    delete_old_data('ponparetic_orig',$conn);
+    if(isset($_POST["deletePonpare"])){
+      delete_old_data('ponparetic_orig',$conn);
+    }
     $sql = "LOAD DATA LOCAL INFILE '/Library/WebServer/Documents/uploads/".$_FILES[ponpare][name]."'
   INTO TABLE ponparetic_orig 
   FIELDS TERMINATED BY ',' 
@@ -195,9 +205,11 @@ if(isset($_POST["ponpareUpload"]) && $_FILES["ponpare"]["error"] == UPLOAD_ERR_O
         echo "Error Insert table: " . $conn->error;
     }
 
-  // Insert into summary table
+    // Insert into summary table
     //SQL BEGIN
-    delete_summary_old_data("ポンパレチケット",$conn);
+    if(isset($_POST["deletePonpare"])){
+      delete_summary_old_data("ポンパレチケット",$conn);
+    }
     $sql = "INSERT
 INTO
   summary(
@@ -284,7 +296,9 @@ if(isset($_POST["3pleUpload"]) && $_FILES["3ple"]["error"] == UPLOAD_ERR_OK ){
         // further validation/sanitation of the filename may be appropriate
     $name = basename($_FILES["3ple"]["name"]);
     move_uploaded_file($tmp_name, "uploads/$name");
-    delete_old_data('3ple_orig',$conn);
+    if(isset($_POST["delete3ple"])){
+      delete_old_data('3ple_orig',$conn);
+    }
     $sql = "LOAD DATA LOCAL INFILE "."'/Library/WebServer/Documents/uploads/".$_FILES['3ple'][name]."'
     INTO TABLE 3ple_orig
     FIELDS TERMINATED BY ',' 
@@ -300,7 +314,9 @@ if(isset($_POST["3pleUpload"]) && $_FILES["3ple"]["error"] == UPLOAD_ERR_OK ){
 
       // Insert into summary table
     //SQL BEGIN
-    delete_summary_old_data("サンプル百貨店",$conn);
+    if(isset($_POST["delete3ple"])){
+      delete_summary_old_data("サンプル百貨店",$conn);
+    }
     $sql = "INSERT
   INTO
   summary(
