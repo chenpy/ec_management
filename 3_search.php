@@ -2,6 +2,7 @@
 // Connect to database
 include 'mysql_connect.php';
 mb_internal_encoding("UTF-8");
+header('Content-type: text/html; charset=utf-8');
 $sql= "SELECT * from summary where";
 $appendSql = "";
 //  Make mall search string
