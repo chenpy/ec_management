@@ -20,6 +20,10 @@
     <option value="Amazon">アマゾン</option>
     <option value="ポンパレモール">ポンパレモール</option>
     <option value="Qoo10">Qoo10</option>
+    <option value="ラクーポン">ラクーポン</option>
+    <option value="サンプル百貨店">サンプル百貨店</option>
+    <option value="ポンパレチケット">ポンパレチケット</option>
+    <option value="グルーポン">グルーポン</option>
   </select><br>
 
   注文番号: <input type="text" name="orderId"><br>

@@ -1,4 +1,4 @@
-<?php
+  <?php
 // Connect to database
 include 'mysql_connect.php';
 mb_internal_encoding("UTF-8");
@@ -24,6 +24,22 @@ switch ($_POST["mall"]) {
   
   case 'Rakuten':
     $appendSql .= " `モール` = 'Rakuten' AND";
+    break;
+
+  case 'ラクーポン':
+    $appendSql .= " `モール` = 'ラクーポン' AND";
+    break;
+
+  case 'サンプル百貨店':
+    $appendSql .= " `モール` = 'サンプル百貨店' AND";
+    break;
+    
+  case 'ポンパレチケット':
+    $appendSql .= " `モール` = 'ポンパレチケット' AND";
+    break;
+  
+  case 'グルーポン':
+    $appendSql .= " `モール` = 'グルーポン' AND";
     break;
 
   default:

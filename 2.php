@@ -16,28 +16,32 @@
 	<div class="upload">
   		<form action="2_file_upload.php" method="post" enctype="multipart/form-data">
     		ラクーポン
-    	<input type="file" name="racoupon">
-   	 	<input type="submit" value="Upload" name="racouponUpload">
+    	<input type="file" name="racoupon"><br>
+       <input type="checkbox" name="deleteRacoupon" value="1">前回アップ資料削除
+       <input type="submit" value="Upload" name="racouponUpload">
 		</form>
   	</div>
   	<div class="upload">
   		<form action="2_file_upload.php" method="post" enctype="multipart/form-data">
     		グルーポン
-    	<input type="file" name="groupon">
+    	<input type="file" name="groupon"><br>
+       <input type="checkbox" name="deleteGroupon" value="1">前回アップ資料削除
    	 	<input type="submit" value="Upload" name="grouponUpload">
 		</form>
   	</div>
   	<div class="upload">
   		<form action="2_file_upload.php" method="post" enctype="multipart/form-data">
     		ポンパレ
-    	<input type="file" name="ponpare">
+    	<input type="file" name="ponpare"><br>
+       <input type="checkbox" name="deletePonpare" value="1">前回アップ資料削除
    	 	<input type="submit" value="Upload" name="ponpareUpload">
 		</form>
   	</div>
   	<div class="upload">
   		<form action="2_file_upload.php" method="post" enctype="multipart/form-data">
     		サンプル百貨店
-    	<input type="file" name="3ple">
+    	<input type="file" name="3ple"><br>
+       <input type="checkbox" name="delete3ple" value="1">前回アップ資料削除
    	 	<input type="submit" value="Upload" name="3pleUpload">
 		</form>
   	</div>
