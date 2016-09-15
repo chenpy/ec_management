@@ -1,3 +1,3 @@
 <?php
-$uploadPath="C:/";
+$uploadPath="C:/wamp/www/uploads/";
 ?>
