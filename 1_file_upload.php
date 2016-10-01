@@ -1,7 +1,7 @@
 <?php
 // Connect to database
 include 'mysql_connect.php';
-
+include 'path.php';
 function delete_old_data($tableName,$conn){
   $delete_old_sql="DELETE FROM $tableName WHERE DATE(`upload`) = CURDATE();";
   if ($conn->query($delete_old_sql) === TRUE) {
@@ -27,7 +27,7 @@ if(isset($_POST["yahooUpload"]) && $_FILES["yahoo_items_info"]["error"] == UPLOA
     $name = basename($_FILES["yahoo_items_info"]["name"]);
     move_uploaded_file($tmp_name, "uploads/$name");
     delete_old_data('yahoo_items_info',$conn);
-    $sql = "LOAD DATA LOCAL INFILE '/Library/WebServer/Documents/uploads/".$_FILES[yahoo_items_info][name]."'
+    $sql = "LOAD DATA LOCAL INFILE '".$uploadPath.$_FILES[yahoo_items_info][name]."'
 	INTO TABLE yahoo_items_info 
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '\"'
@@ -43,7 +43,7 @@ if(isset($_POST["yahooUpload"]) && $_FILES["yahoo_items_info"]["error"] == UPLOA
     $name = basename($_FILES["yahoo_order_info"]["name"]);
     move_uploaded_file($tmp_name, "uploads/$name");
     delete_old_data('yahoo_order_info',$conn);
-    $sql = "LOAD DATA LOCAL INFILE '/Library/WebServer/Documents/uploads/".$_FILES[yahoo_order_info][name]."'
+    $sql = "LOAD DATA LOCAL INFILE '".$uploadPath.$_FILES[yahoo_order_info][name]."'
     INTO TABLE yahoo_order_info 
     FIELDS TERMINATED BY ',' 
     ENCLOSED BY '\"'
@@ -127,7 +127,7 @@ if(isset($_POST["rakutenUpload"]) && $_FILES["rakuten"]["error"] == UPLOAD_ERR_O
     $name = basename($_FILES["rakuten"]["name"]);
     move_uploaded_file($tmp_name, "uploads/$name");
     delete_old_data('rakuten_original',$conn);
-    $sql = "LOAD DATA LOCAL INFILE "."'/Library/WebServer/Documents/uploads/".$_FILES[rakuten][name]."'
+    $sql = "LOAD DATA LOCAL INFILE '".$uploadPath.$_FILES[rakuten][name]."'
     INTO TABLE rakuten_original
     FIELDS TERMINATED BY ',' 
     ENCLOSED BY '\"'
@@ -165,7 +165,7 @@ if(isset($_POST["ponpareUpload"]) && $_FILES["ponpare"]["error"] == UPLOAD_ERR_O
     $name = basename($_FILES["ponpare"]["name"]);
     move_uploaded_file($tmp_name, "uploads/$name");
     delete_old_data('ponpare_original',$conn);
-    $sql = "LOAD DATA LOCAL INFILE "."'/Library/WebServer/Documents/uploads/".$_FILES[ponpare][name]."'
+    $sql = "LOAD DATA LOCAL INFILE '".$uploadPath.$_FILES[ponpare][name]."'
     INTO TABLE ponpare_original
     FIELDS TERMINATED BY ',' 
     ENCLOSED BY '\"'
@@ -201,7 +201,7 @@ if(isset($_POST["amazonUpload"]) && $_FILES["amazon_to_ship"]["error"] == UPLOAD
     $name = basename($_FILES["amazon_to_ship"]["name"]);
     move_uploaded_file($tmp_name, "uploads/$name");
     delete_old_data('amazon_to_ship',$conn);
-    $sql = "LOAD DATA LOCAL INFILE '/Library/WebServer/Documents/uploads/".$_FILES[amazon_to_ship][name]."'
+    $sql = "LOAD DATA LOCAL INFILE '".$uploadPath.$_FILES[amazon_to_ship][name]."'
   INTO TABLE amazon_to_ship 
   FIELDS TERMINATED BY '\t' 
   LINES TERMINATED BY '\r\n'
@@ -217,7 +217,7 @@ if(isset($_POST["amazonUpload"]) && $_FILES["amazon_to_ship"]["error"] == UPLOAD
     $name = basename($_FILES["amazon_order"]["name"]);
     move_uploaded_file($tmp_name, "uploads/$name");
     delete_old_data('amazon_order',$conn);
-    $sql = "LOAD DATA LOCAL INFILE '/Library/WebServer/Documents/uploads/".$_FILES[amazon_order][name]."'
+    $sql = "LOAD DATA LOCAL INFILE '".$uploadPath.$_FILES[amazon_order][name]."'
     INTO TABLE amazon_order 
     FIELDS TERMINATED BY '\t' 
     LINES TERMINATED BY '\r\n'
@@ -298,7 +298,7 @@ if(isset($_POST["q10Upload"]) && $_FILES["q10"]["error"] == UPLOAD_ERR_OK ){
     $name = basename($_FILES["q10"]["name"]);
     move_uploaded_file($tmp_name, "uploads/$name");
     delete_old_data('q10_original',$conn);
-    $sql = "LOAD DATA LOCAL INFILE "."'/Library/WebServer/Documents/uploads/".$_FILES[q10][name]."'
+    $sql = "LOAD DATA LOCAL INFILE '".$uploadPath.$_FILES[q10][name]."'
     INTO TABLE q10_original
     FIELDS TERMINATED BY ',' 
     ENCLOSED BY '\"'

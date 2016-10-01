@@ -58,7 +58,7 @@
   	<div class="upload">
   		<form action="1_generate_csv.php" method="post" enctype="multipart/form-data">
     		本日出荷資料まとめ
-        <input type="submit" value="Generate" name="generateCsv">
+        <input type="submit" value="生成" name="generateCsv">
 		</form>
   	</div>
 </body>

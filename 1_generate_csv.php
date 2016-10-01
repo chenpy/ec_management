@@ -1,9 +1,17 @@
 <?php
 // Connect to database
 include 'mysql_connect.php';
+include 'path.php';
 $fileName = date("md")."モール--- NGWジャパン";
-$csvFilePath="/Library/WebServer/Documents/uploads/".$fileName.".csv";
-$xlsFilePath = "/Library/WebServer/Documents/uploads/".$fileName.".xls";
+if($isWin == 1){
+    $fileNameSjis = mb_convert_encoding($fileName,"sjis-win","UTF-8");
+    $csvFilePath=$uploadPath.$fileNameSjis.".csv";
+    $xlsFilePath = $uploadPath.$fileNameSjis.".xls";
+} else {
+    $csvFilePath=$uploadPath.$fileName.".csv";
+    $xlsFilePath = $uploadPath.$fileName.".xls";
+}
+
 //Generate CSV start 
 if(isset($_POST["generateCsv"])){
     unlink($csvFilePath);
@@ -15,7 +23,7 @@ SELECT
 FROM
   summary
 WHERE
-    `モール`='Yahoo' OR `モール`='Amazon' OR `モール`='Rakuten' OR `モール`='ポンパレモール' OR `モール`='Qoo10' 
+    (`モール`='Yahoo' OR `モール`='Amazon' OR `モール`='Rakuten' OR `モール`='ポンパレモール' OR `モール`='Qoo10') AND `出荷日` = CURDATE()
 INTO OUTFILE
   '$csvFilePath' FIELDS ENCLOSED BY '\"' TERMINATED BY ',' ESCAPED BY '\"' LINES TERMINATED BY '\r\n' ";
 
