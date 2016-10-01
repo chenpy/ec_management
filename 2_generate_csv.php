@@ -3,8 +3,15 @@
 include 'mysql_connect.php';
 include 'path.php';
 $fileName = date("md")."クーポンーー NGWジャパン";
-$csvFilePath=$uploadPath.$fileName.".csv";
-$xlsFilePath = $uploadPath.$fileName.".xls";
+if($isWin == 1){
+    $fileNameSjis = mb_convert_encoding($fileName,"sjis-win","UTF-8");
+    $csvFilePath=$uploadPath.$fileNameSjis.".csv";
+    $xlsFilePath = $uploadPath.$fileNameSjis.".xls";
+} else {
+    $csvFilePath=$uploadPath.$fileName.".csv";
+    $xlsFilePath = $uploadPath.$fileName.".xls";
+}
+
 //Generate CSV start 
 if(isset($_POST["generateCsv"])){
     unlink($csvFilePath);
@@ -16,7 +23,7 @@ SELECT
 FROM
   summary
 WHERE
-    `モール`='ラクーポン' OR `モール`='グルーポン' OR `モール`='ポンパレチケット' OR `モール`='サンプル百貨店' 
+    (`モール`='ラクーポン' OR `モール`='グルーポン' OR `モール`='ポンパレチケット' OR `モール`='サンプル百貨店' ) AND `出荷日` = CURDATE()
 INTO OUTFILE
   '$csvFilePath' FIELDS ENCLOSED BY '\"' TERMINATED BY ',' ESCAPED BY '\"' LINES TERMINATED BY '\r\n' ";
 
