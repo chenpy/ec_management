@@ -246,7 +246,7 @@ if(isset($_POST["amazonUpload"]) && $_FILES["amazon_to_ship"]["error"] == UPLOAD
     12,
     8
   ),
-  CURDATE(), amazon_order.`buyer-name`, '', '', '',Insert( amazon_order.`buyer-phone-number`,4,0,'-'), `amazon_order`.`product-name`, items_info.name, items_info.id, amazon_to_ship.`quantity-purchased`, items_info.unit * `amazon_to_ship`.`quantity-purchased`, `amazon_order`.`item-price` / amazon_order.`quantity-purchased`, `amazon_order`.`recipient-name`, '', `amazon_order`.`ship-postal-code`, CONCAT(
+  CURDATE(), amazon_order.`buyer-name`, '', '', '',IF(LOCATE(amazon_order.`buyer-phone-number`,'-')=0, INSERT(amazon_order.`buyer-phone-number`,4,0,'-'),amazon_order.`buyer-phone-number`), `amazon_order`.`product-name`, items_info.name, items_info.id, amazon_to_ship.`quantity-purchased`, items_info.unit * `amazon_to_ship`.`quantity-purchased`, `amazon_order`.`item-price` / amazon_order.`quantity-purchased`, `amazon_order`.`recipient-name`, '', `amazon_order`.`ship-postal-code`, CONCAT(
     amazon_order.`ship-state`,
     amazon_order.`ship-address-1`,
     amazon_order.`ship-address-2`,
