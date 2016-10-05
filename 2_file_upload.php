@@ -68,7 +68,7 @@ FROM
 LEFT JOIN
   `items_info`
 ON
-  items_info.id = `商品コード` AND mall = 'ラクーポン'  )";
+  items_info.id = `商品コード`)";
     //SQL END
     if ($conn->query($sql) === TRUE) {
         echo "Insert ponpare data successfully<br>";
@@ -170,7 +170,7 @@ FROM
 LEFT JOIN
   `items_info`
 ON
-  items_info.id = `CDA` AND mall = 'グルーポン'
+  items_info.id = `CDA`
   )";
     //SQL END
     if ($conn->query($sql) === TRUE) {
@@ -277,7 +277,7 @@ INTO
   LEFT JOIN
     `items_info`
   ON
-    items_info.id = '100' AND mall = 'ポンパレチケット')";
+    items_info.id = '100')";
     //SQL END
     if ($conn->query($sql) === TRUE) {
         echo "Insert ponpare data successfully<br>";
@@ -355,7 +355,7 @@ if(isset($_POST["3pleUpload"]) && $_FILES["3ple"]["error"] == UPLOAD_ERR_OK ){
   LEFT JOIN
     `items_info`
   ON
-    items_info.id = `掲載ＩＤ` AND mall = 'サンプル百貨店')";
+    items_info.id = `掲載ＩＤ` )";
     //SQL END
     if ($conn->query($sql) === TRUE) {
         echo "Insert 3ple data successfully<br>";
