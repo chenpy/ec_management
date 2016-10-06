@@ -55,7 +55,7 @@ if(isset($_POST["racouponUpload"]) && $_FILES["racoupon"]["error"] == UPLOAD_ERR
   'ラクーポン',
   `注文番号`,
   SUBSTR(`注文日時`, 1, 10),
-  SUBSTR(`注文日時`, 12, 8),
+  SUBSTR(`注文日時`, 11, 8),
   CURDATE(), `注文主氏名`, '', `注文主郵便番号`, `注文主住所1`, `注文主電話番号`, `商品名`, items_info.name, items_info.id, `個数`, `個数` * items_info.unit, items_info.couponSitePrice, `送付先氏名`, '', `送付先郵便番号`, `送付先住所1`, `送付先電話番号`, '', '', '', IF(
     `注文主氏名` != `送付先氏名`,
     CONCAT('注文者: ', `注文主氏名`),
@@ -174,7 +174,7 @@ ON
   )";
     //SQL END
     if ($conn->query($sql) === TRUE) {
-        echo "Insert ponpare data successfully<br>";
+        echo "Insert groupon data successfully<br>";
     } else {
         echo "Error Insert table: " . $conn->error;
     }
