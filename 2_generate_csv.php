@@ -18,13 +18,13 @@ if(isset($_POST["generateCsv"])){
     $sql = "SELECT
 'モール','注文番号','送付先氏名','送付先郵便番号','送付先住所','送付先電話番号','宅配商品','出荷個数','配達日指定','配達時間指定','ネットコメント','注文者と送付先は異なる'
 UNION ALL
-SELECT
+SELECT * from (SELECT
   `モール`,`注文番号`,`送付先氏名`,`送付先郵便番号`,`送付先住所`,`送付先電話番号`,`宅配商品`,`出荷個数`,`配達日指定`,`配達時間指定`,`ネットコメント`,`注文者と送付先は異なる`
 FROM
   summary
 WHERE
-    (`モール`='ラクーポン' OR `モール`='グルーポン' OR `モール`='ポンパレチケット' OR `モール`='サンプル百貨店' ) AND `出荷日` = CURDATE()
-ORDER BY `モール` desc
+    `モール`='ラクーポン' OR `モール`='グルーポン' OR `モール`='ポンパレチケット' OR `モール`='サンプル百貨店'  AND `出荷日` = CURDATE()
+ORDER BY `モール` desc) as a
 INTO OUTFILE
   '$csvFilePath' FIELDS ENCLOSED BY '\"' TERMINATED BY ',' ESCAPED BY '\"' LINES TERMINATED BY '\r\n' ";
 
