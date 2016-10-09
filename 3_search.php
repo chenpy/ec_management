@@ -64,11 +64,11 @@ if($_POST["endYear"] != "" && $_POST["endMonth"]!= "" && $_POST["endDay"]!= ""){
 }
 //注文者電話番号:
 if($_POST["orderPhone"]!= ""){
-  $appendSql .= " `注文者電話番号` = '$_POST[orderPhone]' AND";
+  $appendSql .= "  REPLACE(`注文者電話番号`,'-','') = '$_POST[orderPhone]' AND";
 }
 //送付先電話番号:
 if($_POST["shipPhone"]!= ""){
-  $appendSql .= " `送付先電話番号` = '$_POST[shipPhone]' AND";
+  $appendSql .= " REPLACE(`送付先電話番号`,'-','') = '$_POST[shipPhone]' AND";
 }
 //追跡番号:
 if($_POST["trackNum"]!= ""){
@@ -92,9 +92,9 @@ echo "<table border='1'>
 <th>お問い合わせ番号</th>
 <th>注文者名前</th>
 <th>注文日 </th>
-<th>注文者電話番号</th>
-<th>送付先電話番号</th>
-<th>送付先郵便番号</th>
+<th>注文者電話番号(数字だけ入力してください)</th>
+<th>送付先電話番号(数字だけ入力してください)</th>
+<th>送付先郵便番号(XXX-YYYY)</th>
 <th>送付先住所</th>
 </tr>";
 

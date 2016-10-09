@@ -24,6 +24,7 @@ FROM
   summary
 WHERE
     (`モール`='Yahoo' OR `モール`='Amazon' OR `モール`='Rakuten' OR `モール`='ポンパレモール' OR `モール`='Qoo10') AND `出荷日` = CURDATE()
+ORDER BY `モール` desc
 INTO OUTFILE
   '$csvFilePath' FIELDS ENCLOSED BY '\"' TERMINATED BY ',' ESCAPED BY '\"' LINES TERMINATED BY '\r\n' ";
 

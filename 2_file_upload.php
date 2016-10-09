@@ -55,7 +55,7 @@ if(isset($_POST["racouponUpload"]) && $_FILES["racoupon"]["error"] == UPLOAD_ERR
   'ラクーポン',
   `注文番号`,
   SUBSTR(`注文日時`, 1, 10),
-  SUBSTR(`注文日時`, 12, 8),
+  SUBSTR(`注文日時`, 11, 8),
   CURDATE(), `注文主氏名`, '', `注文主郵便番号`, `注文主住所1`, `注文主電話番号`, `商品名`, items_info.name, items_info.id, `個数`, `個数` * items_info.unit, items_info.couponSitePrice, `送付先氏名`, '', `送付先郵便番号`, `送付先住所1`, `送付先電話番号`, '', '', '', IF(
     `注文主氏名` != `送付先氏名`,
     CONCAT('注文者: ', `注文主氏名`),
@@ -68,7 +68,7 @@ FROM
 LEFT JOIN
   `items_info`
 ON
-  items_info.id = `商品コード` AND mall = 'ラクーポン'  )";
+  items_info.id = `商品コード`)";
     //SQL END
     if ($conn->query($sql) === TRUE) {
         echo "Insert ponpare data successfully<br>";
@@ -170,11 +170,11 @@ FROM
 LEFT JOIN
   `items_info`
 ON
-  items_info.id = `CDA` AND mall = 'グルーポン'
+  items_info.id = `CDA`
   )";
     //SQL END
     if ($conn->query($sql) === TRUE) {
-        echo "Insert ponpare data successfully<br>";
+        echo "Insert groupon data successfully<br>";
     } else {
         echo "Error Insert table: " . $conn->error;
     }
@@ -277,7 +277,7 @@ INTO
   LEFT JOIN
     `items_info`
   ON
-    items_info.id = '100' AND mall = 'ポンパレチケット')";
+    items_info.id = '100')";
     //SQL END
     if ($conn->query($sql) === TRUE) {
         echo "Insert ponpare data successfully<br>";
@@ -334,8 +334,8 @@ if(isset($_POST["3pleUpload"]) && $_FILES["3ple"]["error"] == UPLOAD_ERR_OK ){
     `電話番号`,
     `掲載名`,
     '1',
+    items_info.name,
     items_info.id,
-    items_info.unit,
     items_info.unit,
     items_info.couponSitePrice,
     CONCAT(`姓`, `名`),
@@ -355,7 +355,7 @@ if(isset($_POST["3pleUpload"]) && $_FILES["3ple"]["error"] == UPLOAD_ERR_OK ){
   LEFT JOIN
     `items_info`
   ON
-    items_info.id = `掲載ＩＤ` AND mall = 'サンプル百貨店')";
+    items_info.id = `掲載ＩＤ` )";
     //SQL END
     if ($conn->query($sql) === TRUE) {
         echo "Insert 3ple data successfully<br>";

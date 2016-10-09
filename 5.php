@@ -72,14 +72,16 @@
       <option value="4">4</option>
       <option value="5">5</option>
       <option value="6">6</option>
-    </select><br>
+    </select><br><br>
+    クーポンサイト価格: 
+    <input type="text" name="couponPrice" value="0"><br>
     <input type="submit" name="create" value="新規登録">
     <input type="submit" name="update" value="変更確定">
   </form>
 
   <?php 
       if(isset($_POST["create"])){
-        $sql="insert into items_info values('$_POST[productId]','$_POST[name]','$_POST[unit]','$_POST[mall]')";
+        $sql="insert into items_info values('$_POST[productId]','$_POST[name]','$_POST[unit]','$_POST[mall]','$_POST[couponPrice]')";
         echo "<br>".$sql."<br>";
 
         if ($conn->query($sql) === TRUE) {
@@ -88,7 +90,7 @@
           echo "Error creating table: " . $conn->error;
         }
       } else if(isset($_POST["update"])){
-        $sql="Update items_info set name='$_POST[name]',unit='$_POST[unit]',mall='$_POST[mall]' where id='$_POST[productId]'";
+        $sql="Update items_info set name='$_POST[name]',unit='$_POST[unit]',mall='$_POST[mall]',couponSitePrice='$_POST[couponPrice]' where id='$_POST[productId]'";
         echo "<br>".$sql."<br>";
 
         if ($conn->query($sql) === TRUE) {
