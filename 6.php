@@ -10,20 +10,33 @@ function delete_old_data($tableName,$conn){
   }
 }
 if(isset($_POST["submit"]) && $_FILES["uploadedCsv"]["error"] == UPLOAD_ERR_OK){
-  // Yahoo items information handling
   $tmp_name = $_FILES["uploadedCsv"]["tmp_name"];
   // basename() may prevent filesystem traversal attacks;
   // further validation/sanitation of the filename may be appropriate
   $name = basename($_FILES["uploadedCsv"]["name"]);
   move_uploaded_file($tmp_name, "uploads/$name");
+  include_once 'Classes/PHPExcel.php';
+  // Read the file in *.xls format
+  $objReader = PHPExcel_IOFactory::createReader('Excel5');
+  echo $uploadPath.$_FILES["uploadedCsv"]["name"];
+  $objPHPExcel = $objReader->load($uploadPath.$_FILES["uploadedCsv"]["name"]);
+  //Output the file in *.csv 
+  $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
+  $objWriter->save($uploadPath."tempTrackId.csv");
+
+  // Convert the encoding from UTF8 to Shift-jis
+  $utf8CSV = file_get_contents($uploadPath."tempTrackId.csv");
+  $sjisCSV = mb_convert_encoding($utf8CSV,"sjis-win","UTF-8");
+  file_put_contents($uploadPath."tempTrackId.csv",$sjisCSV);
+
   delete_old_data('summary_temp',$conn);
-  $sql = "LOAD DATA LOCAL INFILE '".$uploadPath.$_FILES[uploadedCsv][name]."'
+  $sql = "LOAD DATA LOCAL INFILE '".$uploadPath.'tempTrackId.csv'."'
             INTO TABLE summary_temp 
             FIELDS TERMINATED BY ',' 
             ENCLOSED BY '\"'
-            LINES TERMINATED BY '\r\n'
+            LINES TERMINATED BY '\n'
             IGNORE 1 ROWS";
-  //echo $sql;
+  echo $sql;
   if ($conn->query($sql) === TRUE) {
         echo "Insert data successfully<br>";
   } else {
