@@ -22,7 +22,7 @@ function delete_summary_old_data($mall,$conn){
 
 // Racoupon start
 if(isset($_POST["racouponUpload"]) && $_FILES["racoupon"]["error"] == UPLOAD_ERR_OK ){  
-    // Yahoo items information handling
+    // racoupon items information handling
     $tmp_name = $_FILES["racoupon"]["tmp_name"];
         // basename() may prevent filesystem traversal attacks;
         // further validation/sanitation of the filename may be appropriate
@@ -49,6 +49,7 @@ if(isset($_POST["racouponUpload"]) && $_FILES["racoupon"]["error"] == UPLOAD_ERR
     if(isset($_POST["deleteRacoupon"])){
       delete_summary_old_data("ラクーポン",$conn);
     }
+    $isCustUpDayEnabled = isset($_POST[isRacouponCustUpDay])? "'".$_POST[racouponUpDate]."'":"CURDATE()";
     $sql = "INSERT INTO summary (
     SELECT
   '',
@@ -56,7 +57,7 @@ if(isset($_POST["racouponUpload"]) && $_FILES["racoupon"]["error"] == UPLOAD_ERR
   `注文番号`,
   SUBSTR(`注文日時`, 1, 10),
   SUBSTR(`注文日時`, 11, 8),
-  CURDATE(), `注文主氏名`, '', `注文主郵便番号`, `注文主住所1`, `注文主電話番号`, `商品名`, items_info.name, items_info.id, `個数`, `個数` * items_info.unit, items_info.couponSitePrice, `送付先氏名`, '', `送付先郵便番号`, `送付先住所1`, `送付先電話番号`, '', '', '', IF(
+  $isCustUpDayEnabled, `注文主氏名`, '', `注文主郵便番号`, `注文主住所1`, `注文主電話番号`, `商品名`, items_info.name, items_info.id, `個数`, `個数` * items_info.unit, items_info.couponSitePrice, `送付先氏名`, '', `送付先郵便番号`, `送付先住所1`, `送付先電話番号`, '', '', '', IF(
     `注文主氏名` != `送付先氏名`,
     CONCAT('注文者: ', `注文主氏名`),
     ''),
@@ -126,6 +127,7 @@ if(isset($_POST["grouponUpload"]) && $_FILES["groupon"]["error"] == UPLOAD_ERR_O
 
     // Insert into summary table
     //SQL BEGIN
+     $isCustUpDayEnabled = isset($_POST[isGrouponCustUpDay])? "'".$_POST[grouponUpDate]."'":"CURDATE()";
     if(isset($_POST["deleteGroupon"])){
       delete_summary_old_data("グルーポン",$conn);
     }
@@ -138,7 +140,7 @@ SELECT
   `OID`,
   SUBSTR(`購入日`, 1, 10),
   SUBSTR(`購入日`, 12, 8),
-  CURDATE(), CONCAT(`注文者_姓`, `注文者_名`),
+  $isCustUpDayEnabled, CONCAT(`注文者_姓`, `注文者_名`),
   '',
 INSERT
   (`配送先_郵便番号`, 4, 0, '-'),
@@ -184,7 +186,7 @@ ON
 //Ponpare start
 
 if(isset($_POST["ponpareUpload"]) && $_FILES["ponpare"]["error"] == UPLOAD_ERR_OK ){
-    // Yahoo items information handling
+    // ponpare items information handling
     $tmp_name = $_FILES["ponpare"]["tmp_name"];
         // basename() may prevent filesystem traversal attacks;
         // further validation/sanitation of the filename may be appropriate
@@ -211,6 +213,7 @@ if(isset($_POST["ponpareUpload"]) && $_FILES["ponpare"]["error"] == UPLOAD_ERR_O
     if(isset($_POST["deletePonpare"])){
       delete_summary_old_data("ポンパレチケット",$conn);
     }
+     $isCustUpDayEnabled = isset($_POST[isPonpareCustUpDay])? "'".$_POST[ponpareUpDate]."'":"CURDATE()";
     $sql = "INSERT
 INTO
   summary(
@@ -220,7 +223,7 @@ INTO
     `購入ID`,
     '',
     '',
-    CURDATE(), CONCAT(`姓`, `名`),
+    $isCustUpDayEnabled, CONCAT(`姓`, `名`),
     CONCAT(`姓カナ`, `名カナ`),
   INSERT
     (`郵便番号`, 4, 0, '-'),
@@ -291,7 +294,7 @@ INTO
 //3ple start 
 if(isset($_POST["3pleUpload"]) && $_FILES["3ple"]["error"] == UPLOAD_ERR_OK ){  
 
-    // Yahoo items information handling
+    // 3ple items information handling
     $tmp_name = $_FILES["3ple"]["tmp_name"];
         // basename() may prevent filesystem traversal attacks;
         // further validation/sanitation of the filename may be appropriate
@@ -318,6 +321,7 @@ if(isset($_POST["3pleUpload"]) && $_FILES["3ple"]["error"] == UPLOAD_ERR_OK ){
     if(isset($_POST["delete3ple"])){
       delete_summary_old_data("サンプル百貨店",$conn);
     }
+     $isCustUpDayEnabled = isset($_POST[is3pleCustUpDay])? "'".$_POST[3pleUpDate]."'":"CURDATE()";
     $sql = "INSERT
   INTO
   summary(
@@ -327,7 +331,7 @@ if(isset($_POST["3pleUpload"]) && $_FILES["3ple"]["error"] == UPLOAD_ERR_OK ){
     `受注ＩＤ`,
     `注文日`,
     '',
-    CURDATE(), CONCAT(`姓`, `名`),
+    $isCustUpDayEnabled, CONCAT(`姓`, `名`),
     CONCAT(`姓カナ`, `名カナ`),
     `郵便番号`,
     CONCAT(`都道府県`, `住所`),

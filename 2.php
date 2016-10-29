@@ -6,7 +6,7 @@
    .upload {
       float:left;
       width:100%;
-      height:15%;
+      height:20%;
     }
   </style>
 </head>
@@ -17,7 +17,10 @@
   		<form action="2_file_upload.php" method="post" enctype="multipart/form-data">
     		ラクーポン
     	<input type="file" name="racoupon"><br>
-       <input type="checkbox" name="deleteRacoupon" value="1">前回アップ資料削除
+       <input type="checkbox" name="deleteRacoupon" value="1">前回アップ資料削除<br>
+       <input type="checkbox" name="isRacouponCustUpDay" value="0">
+       <label for="racouponUpDate">カスタマイズアップロード日期：</label>
+       <input type="date" id="racouponUpDate" name="racouponUpDate" placeholder="2016-10-28"><br>
        <input type="submit" value="Upload" name="racouponUpload">
 		</form>
   	</div>
@@ -26,6 +29,10 @@
     		グルーポン
     	<input type="file" name="groupon"><br>
        <input type="checkbox" name="deleteGroupon" value="1">前回アップ資料削除
+       <br>
+       <input type="checkbox" name="isGrouponCustUpDay" value="0">
+       <label for="grouponUpDate">カスタマイズアップロード日期：</label>
+       <input type="date" id="grouponUpDate" name="grouponUpDate" placeholder="2016-10-28"><br>
    	 	<input type="submit" value="Upload" name="grouponUpload">
 		</form>
   	</div>
@@ -33,7 +40,10 @@
   		<form action="2_file_upload.php" method="post" enctype="multipart/form-data">
     		ポンパレ
     	<input type="file" name="ponpare"><br>
-       <input type="checkbox" name="deletePonpare" value="1">前回アップ資料削除
+       <input type="checkbox" name="deletePonpare" value="1">前回アップ資料削除<br>
+       <input type="checkbox" name="isPonpareCustUpDay" value="0">
+       <label for="ponpareUpDate">カスタマイズアップロード日期：</label>
+       <input type="date" id="ponpareUpDate" name="ponpareUpDate" placeholder="2016-10-28"><br>
    	 	<input type="submit" value="Upload" name="ponpareUpload">
 		</form>
   	</div>
@@ -41,7 +51,10 @@
   		<form action="2_file_upload.php" method="post" enctype="multipart/form-data">
     		サンプル百貨店
     	<input type="file" name="3ple"><br>
-       <input type="checkbox" name="delete3ple" value="1">前回アップ資料削除
+       <input type="checkbox" name="delete3ple" value="1">前回アップ資料削除<br>
+       <input type="checkbox" name="is3pleCustUpDay" value="0">
+       <label for="3pleUpDate">カスタマイズアップロード日期：</label>
+       <input type="date" id="3pleUpDate" name="3pleUpDate" placeholder="2016-10-28"><br>
    	 	<input type="submit" value="Upload" name="3pleUpload">
 		</form>
   	</div>
