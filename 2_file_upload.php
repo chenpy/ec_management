@@ -11,8 +11,8 @@ function delete_old_data($tableName,$conn){
       echo "Error delete old data: " . $conn->error."<br>";
   }
 }
-function delete_summary_old_data($mall,$conn){
-  $delete_old_sql="DELETE FROM summary WHERE `出荷日` = CURDATE() AND `モール`='$mall';";
+function delete_summary_old_data($mall,$conn,$date){
+  $delete_old_sql="DELETE FROM summary WHERE `出荷日` = $date AND `モール`='$mall';";
   if ($conn->query($delete_old_sql) === TRUE) {
       echo "Delete old data of summary successfully<br>";
   } else {
@@ -46,10 +46,10 @@ if(isset($_POST["racouponUpload"]) && $_FILES["racoupon"]["error"] == UPLOAD_ERR
 
     // Insert into summary table
     //SQL BEGIN
-    if(isset($_POST["deleteRacoupon"])){
-      delete_summary_old_data("ラクーポン",$conn);
-    }
     $isCustUpDayEnabled = isset($_POST[isRacouponCustUpDay])? "'".$_POST[racouponUpDate]."'":"CURDATE()";
+    if(isset($_POST["deleteRacoupon"])){
+      delete_summary_old_data("ラクーポン",$conn,$isCustUpDayEnabled);
+    }
     $sql = "INSERT INTO summary (
     SELECT
   '',
@@ -129,7 +129,7 @@ if(isset($_POST["grouponUpload"]) && $_FILES["groupon"]["error"] == UPLOAD_ERR_O
     //SQL BEGIN
      $isCustUpDayEnabled = isset($_POST[isGrouponCustUpDay])? "'".$_POST[grouponUpDate]."'":"CURDATE()";
     if(isset($_POST["deleteGroupon"])){
-      delete_summary_old_data("グルーポン",$conn);
+      delete_summary_old_data("グルーポン",$conn,$isCustUpDayEnabled);
     }
     $sql = "INSERT
 INTO
@@ -210,10 +210,10 @@ if(isset($_POST["ponpareUpload"]) && $_FILES["ponpare"]["error"] == UPLOAD_ERR_O
 
     // Insert into summary table
     //SQL BEGIN
+    $isCustUpDayEnabled = isset($_POST[isPonpareCustUpDay])? "'".$_POST[ponpareUpDate]."'":"CURDATE()";
     if(isset($_POST["deletePonpare"])){
-      delete_summary_old_data("ポンパレチケット",$conn);
+      delete_summary_old_data("ポンパレチケット",$conn,$isCustUpDayEnabled);
     }
-     $isCustUpDayEnabled = isset($_POST[isPonpareCustUpDay])? "'".$_POST[ponpareUpDate]."'":"CURDATE()";
     $sql = "INSERT
 INTO
   summary(
@@ -318,10 +318,10 @@ if(isset($_POST["3pleUpload"]) && $_FILES["3ple"]["error"] == UPLOAD_ERR_OK ){
 
       // Insert into summary table
     //SQL BEGIN
+    $isCustUpDayEnabled = isset($_POST[is3pleCustUpDay])? "'".$_POST[3pleUpDate]."'":"CURDATE()";
     if(isset($_POST["delete3ple"])){
-      delete_summary_old_data("サンプル百貨店",$conn);
+      delete_summary_old_data("サンプル百貨店",$conn,$isCustUpDayEnabled);
     }
-     $isCustUpDayEnabled = isset($_POST[is3pleCustUpDay])? "'".$_POST[3pleUpDate]."'":"CURDATE()";
     $sql = "INSERT
   INTO
   summary(

@@ -10,8 +10,8 @@ function delete_old_data($tableName,$conn){
       echo "Error delete old data: " . $conn->error."<br>";
   }
 }
-function delete_summary_old_data($mall,$conn){
-  $delete_old_sql="DELETE FROM summary WHERE `出荷日` = CURDATE() AND `モール`='$mall';";
+function delete_summary_old_data($mall,$conn,$date){
+  $delete_old_sql="DELETE FROM summary WHERE `出荷日` = $date AND `モール`='$mall';";
   if ($conn->query($delete_old_sql) === TRUE) {
       echo "Delete old data of summary successfully<br>";
   } else {
@@ -61,7 +61,7 @@ if(isset($_POST["yahooUpload"]) && $_FILES["yahoo_items_info"]["error"] == UPLOA
     $isCustUpDayEnabled = isset($_POST[isYahooCustUpDay])? "'".$_POST[yahooUpDate]."'":"CURDATE()";
 
     if(isset($_POST["deleteYahoo"])){
-      delete_summary_old_data("Yahoo",$conn);
+      delete_summary_old_data("Yahoo",$conn,$isCustUpDayEnabled);
     }
 
     $sql = "Insert into summary (SELECT
@@ -144,12 +144,11 @@ if(isset($_POST["rakutenUpload"]) && $_FILES["rakuten"]["error"] == UPLOAD_ERR_O
     }
 
     // Insert into summary table
-    if(isset($_POST["deleteRakuten"])){
-      delete_summary_old_data("Rakuten",$conn);
-    }
-
     //SQL BEGIN
     $isCustUpDayEnabled = isset($_POST[isRakutenCustUpDay])? "'".$_POST[rakutenUpDate]."'":"CURDATE()";
+    if(isset($_POST["deleteRakuten"])){
+      delete_summary_old_data("Rakuten",$conn,$isCustUpDayEnabled);
+    }
         $sql = "insert into summary (SELECT '','Rakuten',`受注番号`,`注文日`,`注文時間`,$isCustUpDayEnabled,CONCAT(`注文者名字`,`注文者名前`) ,CONCAT(`注文者名字フリガナ`,`注文者名前フリガナ`) ,CONCAT(`注文者郵便番号１`,'-',`注文者郵便番号２`), CONCAT(`注文者住所：都道府県`,`注文者住所：都市区`,`注文者住所：町以降`),CONCAT(`注文者電話番号１`,'-',`注文者電話番号２`,`注文者電話番号３`),`商品名` ,items_info.name ,items_info.id,rakuten_original.`個数`,rakuten_original.`個数`*items_info.unit,rakuten_original.単価,CONCAT(`送付先名字`,`送付先名前`) ,CONCAT(`送付先名字フリガナ`,`送付先名前フリガナ`),CONCAT(`送付先郵便番号１`,'-',`送付先郵便番号２`),CONCAT(`送付先住所：都道府県`,`送付先住所：都市区`,`送付先住所：町以降`),CONCAT(`送付先電話番号１`,'-',`送付先電話番号２`,`送付先電話番号３`),`お届け日指定`, IF( LOCATE('〜', `コメント`) != 0, CASE SUBSTR(`コメント`, LOCATE('〜', `コメント`) -3, 2) WHEN '08' THEN '01' ELSE SUBSTR(`コメント`, LOCATE('〜', `コメント`) -3, 2) END, '' ) ,TRIM(IF(STRCMP(CONCAT(`注文者名字`,`注文者名前`),CONCAT(`送付先名字`,`送付先名前`)),CONCAT('注文者:',CONCAT(`注文者名字`,`注文者名前`)),'')),REPLACE(REPLACE(`コメント`,'\n',''),'　',''),'','','' FROM `rakuten_original`,`items_info` WHERE
         items_info.id = rakuten_original.`商品ID`)";
       echo $sql;
@@ -190,7 +189,7 @@ if(isset($_POST["ponpareUpload"]) && $_FILES["ponpare"]["error"] == UPLOAD_ERR_O
     //SQL BEGIN
     $isCustUpDayEnabled = isset($_POST[isPonpareCustUpDay])? "'".$_POST[ponpareUpDate]."'":"CURDATE()";
     if(isset($_POST["deletePonpare"])){
-      delete_summary_old_data("ポンパレモール",$conn);
+      delete_summary_old_data("ポンパレモール",$conn,$isCustUpDayEnabled);
     }
     $sql = "INSERT INTO summary SELECT '','ポンパレモール' ,`注文番号`,REPLACE ( SUBSTR( `注文日時`, 1, 10 ), '-', '/' ), SUBSTR(`注文日時`, 11),$isCustUpDayEnabled,CONCAT(`注文者名字`,`注文者名前`) ,CONCAT(`注文者名字フリガナ`,`注文者名前フリガナ`) ,CONCAT(`注文者郵便番号1`,'-',`注文者郵便番号2`), CONCAT(`注文者住所：都道府県`,`注文者住所：市区町村以降`),INSERT(`注文者電話番号`,4,0,'-'),`商品名` ,name ,id,`個数`,unit * `個数`,単価, CONCAT(`送付先名字`,`送付先名前`) ,CONCAT(`送付先名字フリガナ`,`送付先名前フリガナ`),CONCAT(`送付先郵便番号1`, '-',`送付先郵便番号2`),CONCAT(`送付先住所：都道府県`,`送付先住所：市区町村以降`),INSERT(`送付先電話番号`,4,0,'-'),IF( `コメント` REGEXP '^.*-.*-.*\(.*).*$', SUBSTR(`コメント`, 11, 10), '' ) , IF( LOCATE('〜', `コメント`) != 0, CASE SUBSTR(`コメント`, LOCATE('〜', `コメント`) -3, 2) WHEN '08' THEN '01' ELSE SUBSTR(`コメント`, LOCATE('〜', `コメント`) -3, 2) END, '' ) ,IF(`送付先一致フラグ`=0,CONCAT('注文者:',CONCAT(`注文者名字`,`注文者名前`)),''),REPLACE(`コメント`,'\r\n',''),'','','' from `ponpare_original` left join`items_info` on  ponpare_original.`商品管理ID`=items_info.id  and items_info.mall='ポンパレモール'";
     //SQL END
@@ -243,7 +242,7 @@ if(isset($_POST["amazonUpload"]) && $_FILES["amazon_to_ship"]["error"] == UPLOAD
     // Insert into summary table
     //SQL BEGIN
     if(isset($_POST["deleteAmazon"])){
-      delete_summary_old_data("Amazon",$conn);
+      delete_summary_old_data("Amazon",$conn,$isCustUpDayEnabled);
     }
         $sql = "insert into summary SELECT
   '',
@@ -327,10 +326,10 @@ if(isset($_POST["q10Upload"]) && $_FILES["q10"]["error"] == UPLOAD_ERR_OK ){
 
     // Insert into summary table
     //SQL BEGIN
-    if(isset($_POST["deleteQ10"])){
-      delete_summary_old_data("Qoo10",$conn);
-    }
     $isCustUpDayEnabled = isset($_POST[isQ10CustUpDay])? "'".$_POST[q10UpDate]."'":"CURDATE()";
+    if(isset($_POST["deleteQ10"])){
+      delete_summary_old_data("Qoo10",$conn,$isCustUpDayEnabled);
+    }
     $sql = "insert into summary SELECT '', 'Qoo10', `注文番号`, SUBSTR(`注文日`, 1, LOCATE(' ', `注文日`) -1), SUBSTR(`注文日`, LOCATE(' ', `注文日`), 7), $isCustUpDayEnabled, `購入者名`, `購入者名(フリガナ)`, '', '',IF(`購入者電話番号` != '', `購入者電話番号`, `購入者携帯電話番号`), `商品名`, items_info.name, items_info.id, `数量`, items_info.unit * `数量`, `販売価格`, `受取人名`, `受取人名(フリガナ)`, `郵便番号`, `住所`, IF(`受取人電話番号` != '-', `受取人電話番号`, `受取人携帯電話番号`), `お届け希望日`, '', IF( `購入者名` != `受取人名`, CONCAT('注文者: ', `購入者名`), '' ), `配送要請事項`, '', '', '' FROM q10_original LEFT JOIN items_info ON `商品番号` = items_info.id";
     //SQL END
     if ($conn->query($sql) === TRUE) {
