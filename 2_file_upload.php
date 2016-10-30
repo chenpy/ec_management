@@ -46,9 +46,9 @@ if(isset($_POST["racouponUpload"]) && $_FILES["racoupon"]["error"] == UPLOAD_ERR
 
     // Insert into summary table
     //SQL BEGIN
-    $isCustUpDayEnabled = isset($_POST[isRacouponCustUpDay])? "'".$_POST[racouponUpDate]."'":"CURDATE()";
+    $custUpDay = isset($_POST[isRacouponCustUpDay])? "'".$_POST[racouponUpDate]."'":"CURDATE()";
     if(isset($_POST["deleteRacoupon"])){
-      delete_summary_old_data("ラクーポン",$conn,$isCustUpDayEnabled);
+      delete_summary_old_data("ラクーポン",$conn,$custUpDay);
     }
     $sql = "INSERT INTO summary (
     SELECT
@@ -57,7 +57,7 @@ if(isset($_POST["racouponUpload"]) && $_FILES["racoupon"]["error"] == UPLOAD_ERR
   `注文番号`,
   SUBSTR(`注文日時`, 1, 10),
   SUBSTR(`注文日時`, 11, 8),
-  $isCustUpDayEnabled, `注文主氏名`, '', `注文主郵便番号`, `注文主住所1`, `注文主電話番号`, `商品名`, items_info.name, items_info.id, `個数`, `個数` * items_info.unit, items_info.couponSitePrice, `送付先氏名`, '', `送付先郵便番号`, `送付先住所1`, `送付先電話番号`, '', '', '', IF(
+  $custUpDay, `注文主氏名`, '', `注文主郵便番号`, `注文主住所1`, `注文主電話番号`, `商品名`, items_info.name, items_info.id, `個数`, `個数` * items_info.unit, items_info.couponSitePrice, `送付先氏名`, '', `送付先郵便番号`, `送付先住所1`, `送付先電話番号`, '', '', '', IF(
     `注文主氏名` != `送付先氏名`,
     CONCAT('注文者: ', `注文主氏名`),
     ''),
@@ -127,9 +127,9 @@ if(isset($_POST["grouponUpload"]) && $_FILES["groupon"]["error"] == UPLOAD_ERR_O
 
     // Insert into summary table
     //SQL BEGIN
-     $isCustUpDayEnabled = isset($_POST[isGrouponCustUpDay])? "'".$_POST[grouponUpDate]."'":"CURDATE()";
+     $custUpDay = isset($_POST[isGrouponCustUpDay])? "'".$_POST[grouponUpDate]."'":"CURDATE()";
     if(isset($_POST["deleteGroupon"])){
-      delete_summary_old_data("グルーポン",$conn,$isCustUpDayEnabled);
+      delete_summary_old_data("グルーポン",$conn,$custUpDay);
     }
     $sql = "INSERT
 INTO
@@ -140,7 +140,7 @@ SELECT
   `OID`,
   SUBSTR(`購入日`, 1, 10),
   SUBSTR(`購入日`, 12, 8),
-  $isCustUpDayEnabled, CONCAT(`注文者_姓`, `注文者_名`),
+  $custUpDay, CONCAT(`注文者_姓`, `注文者_名`),
   '',
 INSERT
   (`配送先_郵便番号`, 4, 0, '-'),
@@ -210,9 +210,9 @@ if(isset($_POST["ponpareUpload"]) && $_FILES["ponpare"]["error"] == UPLOAD_ERR_O
 
     // Insert into summary table
     //SQL BEGIN
-    $isCustUpDayEnabled = isset($_POST[isPonpareCustUpDay])? "'".$_POST[ponpareUpDate]."'":"CURDATE()";
+    $custUpDay = isset($_POST[isPonpareCustUpDay])? "'".$_POST[ponpareUpDate]."'":"CURDATE()";
     if(isset($_POST["deletePonpare"])){
-      delete_summary_old_data("ポンパレチケット",$conn,$isCustUpDayEnabled);
+      delete_summary_old_data("ポンパレチケット",$conn,$custUpDay);
     }
     $sql = "INSERT
 INTO
@@ -223,7 +223,7 @@ INTO
     `購入ID`,
     '',
     '',
-    $isCustUpDayEnabled, CONCAT(`姓`, `名`),
+    $custUpDay, CONCAT(`姓`, `名`),
     CONCAT(`姓カナ`, `名カナ`),
   INSERT
     (`郵便番号`, 4, 0, '-'),
@@ -318,9 +318,9 @@ if(isset($_POST["3pleUpload"]) && $_FILES["3ple"]["error"] == UPLOAD_ERR_OK ){
 
       // Insert into summary table
     //SQL BEGIN
-    $isCustUpDayEnabled = isset($_POST[is3pleCustUpDay])? "'".$_POST[3pleUpDate]."'":"CURDATE()";
+    $custUpDay = isset($_POST[is3pleCustUpDay])? "'".$_POST[3pleUpDate]."'":"CURDATE()";
     if(isset($_POST["delete3ple"])){
-      delete_summary_old_data("サンプル百貨店",$conn,$isCustUpDayEnabled);
+      delete_summary_old_data("サンプル百貨店",$conn,$custUpDay);
     }
     $sql = "INSERT
   INTO
@@ -331,7 +331,7 @@ if(isset($_POST["3pleUpload"]) && $_FILES["3ple"]["error"] == UPLOAD_ERR_OK ){
     `受注ＩＤ`,
     `注文日`,
     '',
-    $isCustUpDayEnabled, CONCAT(`姓`, `名`),
+    $custUpDay, CONCAT(`姓`, `名`),
     CONCAT(`姓カナ`, `名カナ`),
     `郵便番号`,
     CONCAT(`都道府県`, `住所`),
