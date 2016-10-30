@@ -3,7 +3,7 @@
 include 'mysql_connect.php';
 include 'path.php';
 function delete_old_data($tableName,$conn){
-  $delete_old_sql="DELETE FROM $tableName WHERE DATE(`upload`) = CURDATE();";
+  $delete_old_sql="TRUNCATE TABLE $tableName;";
   if ($conn->query($delete_old_sql) === TRUE) {
       echo "Delete old data of $tableName successfully<br>";
   } else {
