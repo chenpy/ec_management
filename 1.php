@@ -77,7 +77,10 @@
   	</div>
   	<div class="upload">
   		<form action="1_generate_csv.php" method="post" enctype="multipart/form-data">
-    		本日出荷資料まとめ
+    		本日出荷資料まとめ<br>
+        <input type="checkbox" name="isCustCsvDownloadDay" value="0">
+        <label for="csvDate">カスタマイズダウンロード日期：</label>
+       <input type="date" id="csvDate" name="csvDate" placeholder="2016-10-28"><br>
         <input type="submit" value="生成" name="generateCsv">
 		</form>
   	</div>

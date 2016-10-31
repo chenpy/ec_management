@@ -2,7 +2,13 @@
 // Connect to database
 include 'mysql_connect.php';
 include 'path.php';
-$fileName = date("md")."クーポンーー NGWジャパン";
+if(isset($_POST["isCustCsvDownloadDay"])){
+    $fileName = date("md",strtotime($_POST["csvDate"]))."クーポン--- NGWジャパン";
+    $custDownDay ="'".$_POST[csvDate]."'";
+} else {
+    $fileName = date("md")."クーポン--- NGWジャパン";
+    $custDownDay ="'".$_POST[csvDate]."'";
+}
 if($isWin == 1){
     $fileNameSjis = mb_convert_encoding($fileName,"sjis-win","UTF-8");
     $csvFilePath=$uploadPath.$fileNameSjis.".csv";
@@ -23,7 +29,7 @@ SELECT * from (SELECT
 FROM
   summary
 WHERE
-    `モール`='ラクーポン' OR `モール`='グルーポン' OR `モール`='ポンパレチケット' OR `モール`='サンプル百貨店'  AND `出荷日` = CURDATE()
+    `モール`='ラクーポン' OR `モール`='グルーポン' OR `モール`='ポンパレチケット' OR `モール`='サンプル百貨店'  AND `出荷日` = $custDownDay
 ORDER BY `モール` desc) as a
 INTO OUTFILE
   '$csvFilePath' FIELDS ENCLOSED BY '\"' TERMINATED BY ',' ESCAPED BY '\"' LINES TERMINATED BY '\r\n' ";
