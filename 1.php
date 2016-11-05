@@ -36,7 +36,7 @@
        <input type="checkbox" name="deleteYahoo" value="1"> 前回アップ資料削除<br>
        <input type="checkbox" name="isYahooCustUpDay" value="0">
        <label for="yahooUpDate">カスタマイズアップロード日期：</label>
-       <input type="date" id="yahooUpDate" name="yahoo  UpDate" placeholder="2016-10-28"><br>
+       <input type="date" id="yahooUpDate" name="yahooUpDate" placeholder="2016-10-28"><br>
    	 	<input type="submit" value="Upload" name="yahooUpload">
 		</form>
   	</div>
