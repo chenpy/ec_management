@@ -318,7 +318,7 @@ if(isset($_POST["3pleUpload"]) && $_FILES["3ple"]["error"] == UPLOAD_ERR_OK ){
 
       // Insert into summary table
     //SQL BEGIN
-    $custUpDay = isset($_POST[is3pleCustUpDay])? "'".$_POST[3pleUpDate]."'":"CURDATE()";
+    $custUpDay = isset($_POST[is3pleCustUpDay])? "'".$_POST["3pleUpDate"]."'":"CURDATE()";
     if(isset($_POST["delete3ple"])){
       delete_summary_old_data("サンプル百貨店",$conn,$custUpDay);
     }
