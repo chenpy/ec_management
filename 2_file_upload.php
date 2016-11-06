@@ -6,20 +6,27 @@ include 'path.php';
 function delete_old_data($tableName,$conn){
   $delete_old_sql="TRUNCATE TABLE $tableName;";
   if ($conn->query($delete_old_sql) === TRUE) {
-      echo "Delete old data of $tableName successfully<br>";
+      echo "テーブル $tableName の前回アップロードデータを削除しました<br>";
   } else {
-      echo "Error delete old data: " . $conn->error."<br>";
+      echo "テーブル $tableName のデータを削除するとが失敗しました、原因は: " . $conn->error."<br>";
   }
 }
 function delete_summary_old_data($mall,$conn,$date){
   $delete_old_sql="DELETE FROM summary WHERE `出荷日` = $date AND `モール`='$mall';";
   if ($conn->query($delete_old_sql) === TRUE) {
-      echo "Delete old data of summary successfully<br>";
+      echo "テーブル summary の中の　$mall のデータを削除しました<br>";
   } else {
-      echo "Error delete old data: " . $conn->error."<br>";
+      echo "テーブルsummaryのデータを削除することが失敗しました、原因は:" . $conn->error."<br>";
   }
 }
 
+function execute_insert($table,$conn,$sql){
+    if ($conn->query($sql) === TRUE) {
+        echo "テープル $table に書き込む成功<br>";
+    } else {
+        echo "テープル $table に書き込む失敗、原因は: " . $conn->error."<br>";
+    }
+}
 // Racoupon start
 if(isset($_POST["racouponUpload"]) && $_FILES["racoupon"]["error"] == UPLOAD_ERR_OK ){  
     // racoupon items information handling
@@ -38,11 +45,7 @@ if(isset($_POST["racouponUpload"]) && $_FILES["racoupon"]["error"] == UPLOAD_ERR
     LINES TERMINATED BY '\n'
     IGNORE 1 ROWS";
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Insert data successfully<br>";
-    } else {
-        echo "Error Insert table: " . $conn->error;
-    }
+     execute_insert("racoupon_orig",$conn,$sql);
 
     // Insert into summary table
     //SQL BEGIN
@@ -71,11 +74,7 @@ LEFT JOIN
 ON
   items_info.id = `商品コード`)";
     //SQL END
-    if ($conn->query($sql) === TRUE) {
-        echo "Insert ponpare data successfully<br>";
-    } else {
-        echo "Error Insert table: " . $conn->error;
-    }
+   execute_insert("summary",$conn,$sql);
 }
 // Racoupon END
 
@@ -113,12 +112,7 @@ if(isset($_POST["grouponUpload"]) && $_FILES["groupon"]["error"] == UPLOAD_ERR_O
     ENCLOSED BY '\"'
     LINES TERMINATED BY '\n'
     IGNORE 1 ROWS";
-    echo $sql;
-    if ($conn->query($sql) === TRUE) {
-        echo "Insert groupon data successfully<br>";
-    } else {
-        echo "Error Insert table: " . $conn->error;
-    }
+     execute_insert("groupon_orig",$conn,$sql);
     // Delete
     unlink($grouponXlsPath);
     unlink($grouponUtf8CSVPath);
@@ -175,11 +169,7 @@ ON
   items_info.id = `CDA`
   )";
     //SQL END
-    if ($conn->query($sql) === TRUE) {
-        echo "Insert groupon data successfully<br>";
-    } else {
-        echo "Error Insert table: " . $conn->error;
-    }
+    execute_insert("summary",$conn,$sql);
 }
 // Groupon END
 
@@ -201,12 +191,8 @@ if(isset($_POST["ponpareUpload"]) && $_FILES["ponpare"]["error"] == UPLOAD_ERR_O
   ENCLOSED BY '\"'
   LINES TERMINATED BY '\r\n'
   IGNORE 1 ROWS";
-
-  if ($conn->query($sql) === TRUE) {
-        echo "Insert data successfully<br>";
-    } else {
-        echo "Error Insert table: " . $conn->error;
-    }
+ 
+  execute_insert("ponparetic_orig",$conn,$sql);
 
     // Insert into summary table
     //SQL BEGIN
@@ -282,11 +268,7 @@ INTO
   ON
     items_info.id = '100')";
     //SQL END
-    if ($conn->query($sql) === TRUE) {
-        echo "Insert ponpare data successfully<br>";
-    } else {
-        echo "Error Insert table: " . $conn->error;
-    }
+    execute_insert("summary",$conn,$sql);
 }
 
 //ponpare end
@@ -309,12 +291,7 @@ if(isset($_POST["3pleUpload"]) && $_FILES["3ple"]["error"] == UPLOAD_ERR_OK ){
     ENCLOSED BY '\"'
     LINES TERMINATED BY '\r\n'
     IGNORE 1 ROWS";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Insert 3ple data successfully<br>";
-    } else {
-        echo "Error Insert table: " . $conn->error;
-    }
+    execute_insert("3ple_orig",$conn,$sql);
 
       // Insert into summary table
     //SQL BEGIN
@@ -361,11 +338,7 @@ if(isset($_POST["3pleUpload"]) && $_FILES["3ple"]["error"] == UPLOAD_ERR_OK ){
   ON
     items_info.id = `掲載ＩＤ` )";
     //SQL END
-    if ($conn->query($sql) === TRUE) {
-        echo "Insert 3ple data successfully<br>";
-    } else {
-        echo "Error Insert table: " . $conn->error;
-    }
+     execute_insert("summary",$conn,$sql);
   }
 //3ple end
 ?>
