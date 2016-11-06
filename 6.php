@@ -2,11 +2,11 @@
 include 'mysql_connect.php';
 include 'path.php';
 function delete_old_data($tableName,$conn){
-  $delete_old_sql="DELETE FROM $tableName WHERE DATE(`upload`) = CURDATE();";
+  $delete_old_sql="TRUNCATE TABLE $tableName;";
   if ($conn->query($delete_old_sql) === TRUE) {
-      echo "Delete old data of $tableName successfully<br>";
+      echo "OK<br>";
   } else {
-      echo "Error delete old data: " . $conn->error."<br>";
+      echo "NG: " . $conn->error."<br>";
   }
 }
 if(isset($_POST["submit"]) && $_FILES["uploadedCsv"]["error"] == UPLOAD_ERR_OK){
@@ -38,17 +38,17 @@ if(isset($_POST["submit"]) && $_FILES["uploadedCsv"]["error"] == UPLOAD_ERR_OK){
             IGNORE 1 ROWS";
   echo $sql;
   if ($conn->query($sql) === TRUE) {
-        echo "Insert data successfully<br>";
+        echo "OK<br>";
   } else {
-        echo "Error Insert table: " . $conn->error;
+        echo "NG:" . $conn->error;
   }
   //UPDATE COLUMN
   $sql = "UPDATE summary inner join summary_temp on summary.`モール` = summary_temp.`モール` AND summary.`注文番号`= summary_temp.`注文番号` SET   summary.`お問い合わせ番号` = summary_temp.`お問い合わせ番号`;";
  // echo $sql;
   if ($conn->query($sql) === TRUE) {
-        echo "Update data successfully<br>";
+        echo "テープル summary にアップデート成功<br>";
   } else {
-        echo "Error update table: " . $conn->error;
+        echo "テープル summary にアップデート失敗、原因は:" . $conn->error;
   }
 }
 ?>
